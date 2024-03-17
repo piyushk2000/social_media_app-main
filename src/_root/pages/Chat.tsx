@@ -20,7 +20,9 @@ const useStyles = makeStyles({
   },
   chatSection: {
     width: '180%',
-    height: '95%'
+    height: '100%',
+    // backgroundColor: '#000000'
+    // textColor: '#ffffff'
   },
   headBG: {
       backgroundColor: '#e0e0e0'
@@ -30,7 +32,7 @@ const useStyles = makeStyles({
       height: '100%'
   },
   messageArea: {
-    height: '82vh',
+    height: '87vh',
     overflowY: 'auto'
   }
 });
@@ -40,11 +42,7 @@ const Chat = () => {
 
   return (
       <div>
-        <Grid container >
-            <Grid item xs={12}  >
-                <Typography variant="h5" className="header-message">Chat</Typography>
-            </Grid>
-        </Grid>
+
         <Grid container component={Paper} className={classes.chatSection} ml={10}>
             <Grid item xs={3} className={classes.borderRight500}>
                 <List>
