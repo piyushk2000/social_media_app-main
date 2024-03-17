@@ -10,12 +10,15 @@ import {
   PostDetails,
   UpdateProfile,
   AllUsers,
+  // Chat,
+  // Calendar,
 } from "@/_root/pages";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import SignupForm from "@/_auth/forms/SignupForm";
 import SigninForm from "@/_auth/forms/SigninForm";
 import { Toaster } from "@/components/ui/toaster";
+import Chat from './_root/pages/Chat'
 
 import "./globals.css";
 import CreateEvent from "./_root/pages/CreateEvent";
@@ -38,6 +41,8 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/saved" element={<Saved />} />
+          <Route path="/chat" element={<Chat />} />
+          {/* <Route path="/calendar" element={<Calendar />} /> */}
           <Route path="/all-users" element={<AllUsers />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/create-event" element={<CreateEvent />} />
