@@ -21,6 +21,34 @@ export type INewPost = {
   tags?: string;
 };
 
+export type INewEvent = {
+  eventId: string;
+  name: string;
+  description: string;
+  eventtime: string;
+};
+
+export type IUpdateEvent = {
+  eventId: string;
+  name: string;
+  description: string;
+  eventtime: string;
+};
+
+export type INewModule = {
+  moduleId: string;
+  name: string;
+  description: string;
+  studylevel: string;
+};
+
+export type IUpdateModule = {
+  moduleId: string;
+  name: string;
+  description: string;
+  studylevel: string;
+};
+
 export type IUpdatePost = {
   postId: string;
   caption?: string;

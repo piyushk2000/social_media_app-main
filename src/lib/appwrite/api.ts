@@ -1,7 +1,8 @@
 import { ID, Query } from "appwrite";
 
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { IUpdatePost, INewPost, INewUser, IUpdateUser } from "@/types";
+import { IUpdatePost, INewPost, INewUser, IUpdateUser, INewEvent, INewModule } from "@/types";
+import { IUpdateEvent, IUpdateModule } from "@/types/index";
 
 // ============================================================
 // AUTH
@@ -272,7 +273,7 @@ export async function updatePost(post: IUpdatePost) {
   try {
     let image = {
       imageUrl: post.imageUrl,
-      imageId: post.imageId,
+      imageId: post.imageId
     };
 
     if (hasFileToUpdate) {
@@ -303,7 +304,7 @@ export async function updatePost(post: IUpdatePost) {
         imageUrl: image.imageUrl,
         imageId: image.imageId,
         location: post.location,
-        tags: tags,
+        tags: tags
       }
     );
 
@@ -350,6 +351,184 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 
+
+// ============================== CREATE EVENT
+export async function createEvent(event: INewEvent) {
+  try {
+    // Create event
+    const newEvent = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.eventCollectionId,
+      ID.unique(),
+      {
+        name: event.name,
+        description: event.description,
+        eventtime: event.eventtime
+      }
+    );
+
+    if (!newEvent) {
+      throw Error;
+    }
+
+    return newEvent;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// ============================== GET EVENT BY ID
+export async function getEventById(eventId?: string) {
+  if (!eventId) throw Error;
+
+  try {
+    const event = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.eventCollectionId,
+      eventId
+    );
+
+    if (!event) throw Error;
+
+    return event;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// ============================== UPDATE EVENT
+export async function updateEvent(event: IUpdateEvent) {
+  try {
+    //  Update event
+    const updatedEvent = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.eventCollectionId,
+      event.eventId,
+      {
+        name: event.name,
+        description: event.description,
+        eventtime: event.eventtime
+      }
+    );
+
+    // Failed to update
+    if (!updatedEvent) {
+      // If no new file uploaded, just throw error
+      throw Error;
+    }
+    return updatedEvent;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// ============================== DELETE EVENT
+export async function deleteEvent(eventId?: string) {
+  if (!eventId) return;
+
+  try {
+    const statusCode = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.eventCollectionId,
+      eventId
+    );
+
+    if (!statusCode) throw Error;
+    return { status: "Ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// ============================== CREATE MODULE
+export async function createModule(module: INewModule) {
+  try {
+    // Create post
+    const newModule = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.moduleCollectionId,
+      ID.unique(),
+      {
+        name: module.name,
+        description: module.description,
+        studylevel: module.studylevel
+      }
+    );
+
+    if (!newModule) {
+      throw Error;
+    }
+
+    return newModule;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+// ============================== GET MODULE BY ID
+export async function getModuletById(moduleId?: string) {
+  if (!moduleId) throw Error;
+
+  try {
+    const module = await databases.getDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.moduleCollectionId,
+      moduleId
+    );
+
+    if (!module) throw Error;
+
+    return module;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// ============================== UPDATE MODULE
+export async function updateModule(module: IUpdateModule) {
+  try {
+    //  Update module
+    const updatedEvent = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.moduleCollectionId,
+      module.moduleId,
+      {
+        name: module.name,
+        description: module.description,
+        studylevel: module.studylevel
+      }
+    );
+
+    // Failed to update
+    if (!updatedEvent) {
+      // If no new file uploaded, just throw error
+      throw Error;
+    }
+    return updatedEvent;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// ============================== DELETE MODULE
+export async function deleteModule(moduleId?: string) {
+  if (!moduleId) return;
+
+  try {
+    const statusCode = await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.moduleCollectionId,
+      moduleId
+    );
+
+    if (!statusCode) throw Error;
+    return { status: "Ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // ============================== LIKE / UNLIKE POST
 export async function likePost(postId: string, likesArray: string[]) {
   try {
@@ -379,7 +558,7 @@ export async function savePost(userId: string, postId: string) {
       ID.unique(),
       {
         user: userId,
-        post: postId,
+        post: postId
       }
     );
 

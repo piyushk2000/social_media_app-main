@@ -13,6 +13,8 @@ import {
   signOutAccount,
   getUsers,
   createPost,
+  createModule,
+  createEvent,
   getPostById,
   updatePost,
   getUserPosts,
@@ -25,8 +27,10 @@ import {
   searchPosts,
   savePost,
   deleteSavedPost,
+  getEventById,
 } from "@/lib/appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
+import { INewEvent, INewModule } from "@/types/index";
 
 // ============================================================
 // AUTH QUERIES
@@ -96,6 +100,111 @@ export const useCreatePost = () => {
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
       });
     },
+  });
+};
+
+export const useCreateModule = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (module: INewModule) => createModule(module),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_MODULE],
+      });
+    },
+  });
+};
+
+export const useUpdateModule = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (module: IUpdateModule) => updateModule(module),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
+      });
+    },
+  });
+};
+
+export const useDeleteModule = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ postId, imageId }: { postId?: string; imageId: string }) =>
+      deletePost(postId, imageId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+      });
+    },
+  });
+};
+
+export const useGetModules = (limit?: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_MODULES],
+    queryFn: () => useGetModules(limit),
+  });
+};
+
+export const useGetModulesById = (moduleId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_MODULE_BY_ID, moduleId],
+    queryFn: () => useGetModulesById(moduleId),
+    enabled: !!moduleId,
+  });
+};
+
+export const useCreateEvent = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (module: INewModule) => createEvent(module),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_EVENT],
+      });
+    },
+  });
+};
+
+export const useUpdateEvent = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (event: IUpdatePost) => updatePost(event),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_EVENT_BY_ID, data?.$id],
+      });
+    },
+  });
+};
+
+export const useDeleteEvent = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ postId, imageId }: { postId?: string; imageId: string }) =>
+      deletePost(postId, imageId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_EVENT],
+      });
+    },
+  });
+};
+
+
+export const useGetEvents = (limit?: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_EVENTS],
+    queryFn: () => useGetEvents(limit),
+  });
+};
+
+export const useGetEventsById = (eventId: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_EVENT_BY_ID, eventId],
+    queryFn: () => getEventById(eventId),
+    enabled: !!eventId,
   });
 };
 

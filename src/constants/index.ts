@@ -24,6 +24,26 @@ export const sidebarLinks = [
     route: "/create-post",
     label: "Create Post",
   },
+  {
+    imgURL: "/assets/icons/gallery-add.svg",
+    route: "/create-event",
+    label: "Create event",
+  },
+  {
+    imgURL: "/assets/icons/gallery-add.svg",
+    route: "/create-module",
+    label: "Create module",
+  },
+    {
+    imgURL: "/assets/icons/wallpaper.svg",
+    route: "/all-modules",
+    label: "All Modules",
+  },
+  {
+    imgURL: "/assets/icons/wallpaper.svg",
+    route: "/all-events",
+    label: "All Events",
+  },
 ];
 
 export const bottombarLinks = [

@@ -1,0 +1,26 @@
+import { Models } from "appwrite";
+import { Link } from "react-router-dom";
+
+import { Button } from "../ui/button";
+
+type EventCardProps = {
+  event: Models.Document;
+};
+
+const EventCard = ({ event }: EventCardProps) => {
+  return (
+      <div className="flex-center flex-col gap-1">
+        <p className="base-medium text-light-1 text-center line-clamp-1">
+          @{event.name}
+        </p>
+        <p className="small-regular text-light-3 text-center line-clamp-1">
+          @{event.discription}
+        </p>
+        <p className="small-regular text-light-3 text-center line-clamp-1">
+          @{event.eventtime}
+        </p>
+      </div>
+  );
+};
+
+export default EventCard;

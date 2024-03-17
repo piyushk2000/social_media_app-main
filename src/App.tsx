@@ -18,6 +18,10 @@ import SigninForm from "@/_auth/forms/SigninForm";
 import { Toaster } from "@/components/ui/toaster";
 
 import "./globals.css";
+import CreateEvent from "./_root/pages/CreateEvent";
+import CreateModule from "./_root/pages/CreateModule";
+import AllEvents from "./_root/pages/AllEvents";
+import AllModules from "./_root/pages/AllModules";
 
 const App = () => {
   return (
@@ -36,6 +40,10 @@ const App = () => {
           <Route path="/saved" element={<Saved />} />
           <Route path="/all-users" element={<AllUsers />} />
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/create-event" element={<CreateEvent />} />
+          <Route path="/all-events" element={<AllEvents />} />
+          <Route path="/create-module" element={<CreateModule />} />
+          <Route path="/all-modules" element={<AllModules />} />
           <Route path="/update-post/:id" element={<EditPost />} />
           <Route path="/posts/:id" element={<PostDetails />} />
           <Route path="/profile/:id/*" element={<Profile />} />

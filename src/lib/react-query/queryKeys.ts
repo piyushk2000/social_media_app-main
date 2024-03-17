@@ -7,6 +7,16 @@ export enum QUERY_KEYS {
   GET_USERS = "getUsers",
   GET_USER_BY_ID = "getUserById",
 
+  // GET MODULES
+  GET_MODULES = "getModules",
+  GET_MODULE_BY_ID = "getModuleById",
+  GET_RECENT_MODULE = "getRecentModules",
+
+  // GET EVENTS
+  GET_EVENTS = "getEvents",
+  GET_EVENT_BY_ID = "getEventById",
+  GET_RECENT_EVENT = "getRecentEvents",
+
   // POST KEYS
   GET_POSTS = "getPosts",
   GET_INFINITE_POSTS = "getInfinitePosts",
