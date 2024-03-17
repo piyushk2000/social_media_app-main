@@ -40,7 +40,7 @@ const Chat = () => {
   return (
       <div>
 
-        <Grid container component={Paper} className={classes.chatSection} >
+        <Grid container component={Paper} className={classes.chatSection} ml={10}>
             <Grid item xs={3} className={classes.borderRight500}>
                 <List>
                     <ListItem button key="RemySharp">
@@ -61,7 +61,7 @@ const Chat = () => {
                             <Avatar alt="Remy Sharp" src="https://material-ui.com/static/images/avatar/1.jpg" />
                         </ListItemIcon>
                         <ListItemText primary="Remy Sharp">Remy Sharp</ListItemText>
-                        <ListItemText secondary="online" ></ListItemText>
+                        <ListItemText secondary="online" align="right"></ListItemText>
                     </ListItem>
                     <ListItem button key="Alice">
                         <ListItemIcon>
@@ -82,30 +82,30 @@ const Chat = () => {
                     <ListItem key="1">
                         <Grid container>
                             <Grid item xs={12}>
-                                <ListItemText  primary="Hey man, What's up ?"></ListItemText>
+                                <ListItemText align="right" primary="Hey man, What's up ?"></ListItemText>
                             </Grid>
                             <Grid item xs={12}>
-                                <ListItemText  secondary="09:30"></ListItemText>
+                                <ListItemText align="right" secondary="09:30"></ListItemText>
                             </Grid>
                         </Grid>
                     </ListItem>
                     <ListItem key="2">
                         <Grid container>
                             <Grid item xs={12}>
-                                <ListItemText  primary="Hey, Iam Good! What about you ?"></ListItemText>
+                                <ListItemText align="left" primary="Hey, Iam Good! What about you ?"></ListItemText>
                             </Grid>
                             <Grid item xs={12}>
-                                <ListItemText  secondary="09:31"></ListItemText>
+                                <ListItemText align="left" secondary="09:31"></ListItemText>
                             </Grid>
                         </Grid>
                     </ListItem>
                     <ListItem key="3">
                         <Grid container>
                             <Grid item xs={12}>
-                                <ListItemText  primary="Cool. i am good, let's catch up!"></ListItemText>
+                                <ListItemText align="right" primary="Cool. i am good, let's catch up!"></ListItemText>
                             </Grid>
                             <Grid item xs={12}>
-                                <ListItemText  secondary="10:30"></ListItemText>
+                                <ListItemText align="right" secondary="10:30"></ListItemText>
                             </Grid>
                         </Grid>
                     </ListItem>
@@ -115,7 +115,7 @@ const Chat = () => {
                     <Grid item xs={11}>
                         <TextField id="outlined-basic-email" label="Type Something" fullWidth />
                     </Grid>
-                    <Grid xs={1} >
+                    <Grid xs={1} align="right">
                         <Fab color="primary" aria-label="add"><SendIcon /></Fab>
                     </Grid>
                 </Grid>

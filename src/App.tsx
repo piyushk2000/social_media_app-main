@@ -10,7 +10,7 @@ import {
   PostDetails,
   UpdateProfile,
   AllUsers,
-  Chat,
+  // Chat,
   // Calendar,
 } from "@/_root/pages";
 import AuthLayout from "./_auth/AuthLayout";
@@ -18,6 +18,7 @@ import RootLayout from "./_root/RootLayout";
 import SignupForm from "@/_auth/forms/SignupForm";
 import SigninForm from "@/_auth/forms/SigninForm";
 import { Toaster } from "@/components/ui/toaster";
+import Chat from './_root/pages/Chat'
 
 import "./globals.css";
 
