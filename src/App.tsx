@@ -12,18 +12,20 @@ import {
   AllUsers,
   // Chat,
   // Calendar,
+  AllEvents
 } from "@/_root/pages";
 import AuthLayout from "./_auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 import SignupForm from "@/_auth/forms/SignupForm";
 import SigninForm from "@/_auth/forms/SigninForm";
+import SignupTabs from "@/_auth/forms/SignupTabs";
 import { Toaster } from "@/components/ui/toaster";
 import Chat from './_root/pages/Chat'
 
 import "./globals.css";
 import CreateEvent from "./_root/pages/CreateEvent";
 import CreateModule from "./_root/pages/CreateModule";
-import AllEvents from "./_root/pages/AllEvents";
+// import AllEvents from "./_root/pages/AllEvents";
 import AllModules from "./_root/pages/AllModules";
 
 const App = () => {
@@ -33,7 +35,8 @@ const App = () => {
         {/* public routes */}
         <Route element={<AuthLayout />}>
           <Route path="/sign-in" element={<SigninForm />} />
-          <Route path="/sign-up" element={<SignupForm />} />
+          {/* <Route path="/sign-up" element={<SignupForm />} /> */}
+          <Route path="/sign-up" element={<SignupTabs />} />
         </Route>
 
         {/* private routes */}

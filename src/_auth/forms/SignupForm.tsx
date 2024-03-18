@@ -12,6 +12,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queries";
 import { SignupValidation } from "@/lib/validation";
 import { useUserContext } from "@/context/AuthContext";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const SignupForm = () => {
   const { toast } = useToast();
@@ -74,16 +75,11 @@ const SignupForm = () => {
   };
 
   return (
+    <>
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col">
-        <img src="/assets/images/logo.svg" alt="logo" />
+        
 
-        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
-          Create a new account
-        </h2>
-        <p className="text-light-3 small-medium md:base-regular mt-2">
-          To use snapgram, Please enter your details
-        </p>
 
         <form
           onSubmit={form.handleSubmit(handleSignup)}
@@ -107,7 +103,7 @@ const SignupForm = () => {
             name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="shad-form_label">User Type</FormLabel>
+                <FormLabel className="shad-form_label">username</FormLabel>
                 <FormControl>
                   <Input type="text" className="shad-input" {...field} />
                 </FormControl>
@@ -165,6 +161,7 @@ const SignupForm = () => {
         </form>
       </div>
     </Form>
+    </>
   );
 };
 

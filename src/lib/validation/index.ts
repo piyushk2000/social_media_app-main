@@ -10,6 +10,16 @@ export const SignupValidation = z.object({
   password: z.string().min(8, { message: "Password must be at least 8 characters." }),
 });
 
+export const SignupValidationTeacher = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  username: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email(),
+  password: z.string().min(8, { message: "Password must be at least 8 characters." }),
+  subjects: z.array(z.string()), 
+  qualifications: z.array(z.string()),
+
+});
+
 export const SigninValidation = z.object({
   email: z.string().email(),
   password: z.string().min(8, { message: "Password must be at least 8 characters." }),

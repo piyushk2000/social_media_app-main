@@ -118,7 +118,7 @@ export const useCreateModule = () => {
 export const useUpdateModule = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (module: IUpdateModule) => updateModule(module),
+    mutationFn: () => updateModule(module),
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
