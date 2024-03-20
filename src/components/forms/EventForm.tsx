@@ -162,7 +162,7 @@ const EventForm = ({ event, action }: EventFormProps) => {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
-                      variant={"outline"}
+                      // variant={"outline"}
                       className={cn(
                         "w-[240px] pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
