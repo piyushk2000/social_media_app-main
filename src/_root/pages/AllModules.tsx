@@ -75,22 +75,8 @@ const AllModules = () => {
               <TableRow>
                 <TableCell className="min-w-1 max-w-1 font-medium">Science, technology and maths Access module</TableCell>
                 <TableCell>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead >OU</TableHead>
-                        <TableHead>SCQF	</TableHead>
-                        <TableHead>FHEQ</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell >1</TableCell>
-                        <TableCell>2</TableCell>
-                        <TableCell>3 Card</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
+                  Study leve
+                  
                 </TableCell>
 
                 <TableCell>Online</TableCell>

@@ -96,22 +96,7 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="shad-form_label">Discription</FormLabel>
-              <FormControl>
-                <Textarea
-                  className="shad-textarea custom-scrollbar"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage className="shad-form_message" />
-            </FormItem>
-          )}
-        />
+
 
         <FormField
           control={form.control}
@@ -119,6 +104,32 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">Study Level</FormLabel>
+              <FormControl>
+                <Input type="text" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="studyMethod"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Study Method</FormLabel>
+              <FormControl>
+                <Input type="text" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Discription</FormLabel>
               <FormControl>
                 <Textarea
                   className="shad-textarea custom-scrollbar"

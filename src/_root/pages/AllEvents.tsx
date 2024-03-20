@@ -61,12 +61,12 @@ const AllEvents = () => {
 
 
           <Table>
-            <TableCaption>Modules</TableCaption>
+            <TableCaption>Events</TableCaption>
             <TableHeader>
               <TableRow>
-                <TableHead className="min-w-1 max-w-1">Module Name</TableHead>
-                <TableHead>Study Level</TableHead>
-                <TableHead>Study Method</TableHead>
+                <TableHead className="min-w-1 max-w-1">Event Name</TableHead>
+                <TableHead>Discription </TableHead>
+                <TableHead>Date</TableHead>
                 <TableHead className="">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -74,12 +74,12 @@ const AllEvents = () => {
 
             <TableBody>
               <TableRow>
-                <TableCell className="min-w-1 max-w-1 font-medium">Science, technology and maths Access module</TableCell>
+                <TableCell className="min-w-1 max-w-1 font-medium">Science fair</TableCell>
                 <TableCell>
                   name
                 </TableCell>
 
-                <TableCell>Online</TableCell>
+                <TableCell>10/05/2000</TableCell>
                 <TableCell className="text-right align flex mt-10"><EditIcon /><DeleteIcon /><VisibilityIcon /></TableCell>
               </TableRow>
             </TableBody>

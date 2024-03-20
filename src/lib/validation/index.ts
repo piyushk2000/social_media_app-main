@@ -61,4 +61,5 @@ export const ModuleValidation = z.object({
   name: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
   description: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
   studylevel: z.string().min(5, { message: "Minimum 5 characters." }).max(400, { message: "Maximum 400 caracters" }),
+  studyMethod: z.string().min(5, { message: "Minimum 5 characters." }).max(400, { message: "Maximum 400 caracters" }),
 });
