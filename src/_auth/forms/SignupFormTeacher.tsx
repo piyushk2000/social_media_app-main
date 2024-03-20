@@ -190,7 +190,7 @@ const SignupFormTeacher = () => {
                   <FormControl>
                     <Autocomplete
                     className="ml-100"
-                    // sx={{color:'#ffffff', borderRadius:'50'}}
+                    sx={{color:'#ffffff', borderRadius:'50'}}
                       multiple
                       id="checkboxes-tags-demo"
                       options={qualifications}
@@ -211,7 +211,7 @@ const SignupFormTeacher = () => {
                       )}
                       style={{ width: 500 , }}
                       renderInput={(params) => (
-                        <TextField {...params}    sx={{color:'#000000' , backgroundColor:'#ffffff' , width:'85%' , borderRadius:'50' }}  />
+                        <TextField {...params}    sx={{color:'#000000', width:'85%' , borderRadius:'50' }}  />
                       )}
                     />
 

@@ -1,8 +1,10 @@
 import { Models } from "appwrite";
+import { useNavigate } from "react-router-dom";
 
 // import { useToast } from "@/components/ui/use-toast";
 import { Loader, PostCard, UserCard } from "@/components/shared";
 import { useGetRecentPosts, useGetUsers } from "@/lib/react-query/queries";
+import { Button } from "@/components/ui";
 
 const Home = () => {
   // const { toast } = useToast();
@@ -30,12 +32,22 @@ const Home = () => {
       </div>
     );
   }
+  const navigate = useNavigate();
+ const handelclick = (()=>{
+  navigate("/create-post")
+ })
 
   return (
     <div className="flex flex-1">
       <div className="home-container">
         <div className="home-posts">
-          <h2 className="h3-bold md:h2-bold text-left w-full">Home Feed</h2>
+        <div className="flex justify-between items-center w-full">
+            <h2 className="h3-bold md:h2-bold">Home Feed</h2>
+            <Button className="shad-button_primary whitespace-nowrap" onClick={handelclick}>
+              Create Post
+            </Button>
+          </div>
+
           {isPostLoading && !posts ? (
             <Loader />
           ) : (
