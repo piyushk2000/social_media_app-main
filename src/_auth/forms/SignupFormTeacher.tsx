@@ -19,39 +19,41 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import * as React from 'react';
+import { MultiSelect, OptionType } from "@/components/ui/multi-select";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
-const qualifications = [
-  { title: 'GCSE (General Certificate of Secondary Education)' },
-  { title: 'A-levels (Advanced Level)' },
-  { title: 'BTEC (Business and Technology Education Council)' },
-  { title: 'Foundation Degree' },
-  { title: "Bachelor's Degree" },
-  { title: "Master's Degree" },
-  { title: 'Doctorate (Ph.D.)' },
-  { title: 'HND (Higher National Diploma)' },
-  { title: 'NVQ (National Vocational Qualification)' },
-  { title: 'PGCE (Postgraduate Certificate in Education)' }
-];
+// const qualifications = [
+//   { title: 'GCSE (General Certificate of Secondary Education)' },
+//   { title: 'A-levels (Advanced Level)' },
+//   { title: 'BTEC (Business and Technology Education Council)' },
+//   { title: 'Foundation Degree' },
+//   { title: "Bachelor's Degree" },
+//   { title: "Master's Degree" },
+//   { title: 'Doctorate (Ph.D.)' },
+//   { title: 'HND (Higher National Diploma)' },
+//   { title: 'NVQ (National Vocational Qualification)' },
+//   { title: 'PGCE (Postgraduate Certificate in Education)' }
+// ];
 
-const subjects = [
-  { title: 'Mathematics' },
-  { title: 'English Language' },
-  { title: 'Sciences' },
-  { title: 'History' },
-  { title: 'Geography' },
-  { title: 'Literature' },
-  { title: 'Foreign Languages' },
-  { title: 'Computer Science' },
-  { title: 'Art and Design' },
-  { title: 'Music' },
-  { title: 'Physical Education' },
-  { title: 'Religious Studies or Ethics' },
-  { title: 'Home Economics' },
-  { title: 'Psychology' },
-  { title: 'Technology' }
-];
+// const subjects = [
+//   { title: 'Mathematics' },
+//   { title: 'English Language' },
+//   { title: 'Sciences' },
+//   { title: 'History' },
+//   { title: 'Geography' },
+//   { title: 'Literature' },
+//   { title: 'Foreign Languages' },
+//   { title: 'Computer Science' },
+//   { title: 'Art and Design' },
+//   { title: 'Music' },
+//   { title: 'Physical Education' },
+//   { title: 'Religious Studies or Ethics' },
+//   { title: 'Home Economics' },
+//   { title: 'Psychology' },
+//   { title: 'Technology' }
+// ];
+
 
 const SignupFormTeacher = () => {
   const { toast } = useToast();
@@ -69,6 +71,46 @@ const SignupFormTeacher = () => {
 
     },
   });
+  const options: OptionType[] = [
+    { label: 'Option 1', value: '1' },
+    { label: 'Option 2', value: '2' },
+    { label: 'Option 3', value: '3' },
+    // Add more options as needed
+  ];
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const [selectedQualifications, setSelectedQualifications] = React.useState<string[]>([]);
+  
+  const qualifications: OptionType[] = [
+    { label: 'GCSE (General Certificate of Secondary Education)', value: 'gcse' },
+    { label: 'A-levels (Advanced Level)', value: 'a_levels' },
+    { label: 'BTEC (Business and Technology Education Council)', value: 'btec' },
+    { label: 'Foundation Degree', value: 'foundation_degree' },
+    { label: "Bachelor's Degree", value: 'bachelors_degree' },
+    { label: "Master's Degree", value: 'masters_degree' },
+    { label: 'Doctorate (Ph.D.)', value: 'phd' },
+    { label: 'HND (Higher National Diploma)', value: 'hnd' },
+    { label: 'NVQ (National Vocational Qualification)', value: 'nvq' },
+    { label: 'PGCE (Postgraduate Certificate in Education)', value: 'pgce' }
+  ];
+  
+  const subjects: OptionType[] = [
+    { label: 'Mathematics', value: 'mathematics' },
+    { label: 'English Language', value: 'english_language' },
+    { label: 'Sciences', value: 'sciences' },
+    { label: 'History', value: 'history' },
+    { label: 'Geography', value: 'geography' },
+    { label: 'Literature', value: 'literature' },
+    { label: 'Foreign Languages', value: 'foreign_languages' },
+    { label: 'Computer Science', value: 'computer_science' },
+    { label: 'Art and Design', value: 'art_and_design' },
+    { label: 'Music', value: 'music' },
+    { label: 'Physical Education', value: 'physical_education' },
+    { label: 'Religious Studies or Ethics', value: 'religious_studies_or_ethics' },
+    { label: 'Home Economics', value: 'home_economics' },
+    { label: 'Psychology', value: 'psychology' },
+    { label: 'Technology', value: 'technology' }
+  ];
+  
 
   // Queries
   const { mutateAsync: createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccount();
@@ -117,6 +159,7 @@ const SignupFormTeacher = () => {
 
   return (
     <>
+
       <Form {...form}>
         <div className="sm:w-420 flex-center flex-col">
 
@@ -140,18 +183,18 @@ const SignupFormTeacher = () => {
             />
 
             <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="shad-form_label">username</FormLabel>
-                <FormControl>
-                  <Input type="text" className="shad-input" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="shad-form_label">username</FormLabel>
+                  <FormControl>
+                    <Input type="text" className="shad-input" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
             <FormField
               control={form.control}
@@ -188,33 +231,9 @@ const SignupFormTeacher = () => {
                 <FormItem>
                   <FormLabel className="shad-form_label">subjects</FormLabel>
                   <FormControl>
-                    <Autocomplete
-                    className="ml-100"
-                    sx={{color:'#ffffff', borderRadius:'50'}}
-                      multiple
-                      id="checkboxes-tags-demo"
-                      options={qualifications}
-                      disableCloseOnSelect
-                      getOptionLabel={(option) => option.title}
-                      renderOption={(props, option, { selected }) => (
-                        <li {...props}>
-                          <Checkbox
-                            icon={icon}
-                            checkedIcon={checkedIcon}
-                            style={{ marginRight: 8 }}
-                            checked={selected}
-                            color="primary"
-                            
-                          />
-                          {option.title}
-                        </li>
-                      )}
-                      style={{ width: 500 , }}
-                      renderInput={(params) => (
-                        <TextField {...params}    sx={{color:'#000000', width:'85%' , borderRadius:'50' }}  />
-                      )}
-                    />
-
+                  <div className="App">
+                      <MultiSelect options={subjects} selected={selected} onChange={setSelected} />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -222,39 +241,18 @@ const SignupFormTeacher = () => {
             />
 
 
+
+
             <FormField
               control={form.control}
-              name="subjects"
+              name="qualifications"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="shad-form_label">subjects</FormLabel>
+                  <FormLabel className="shad-form_label">Qualifications</FormLabel>
                   <FormControl>
-                    <Autocomplete
-                    className="ml-100"
-                    // sx={{color:'#ffffff', borderRadius:'50'}}
-                      multiple
-                      id="checkboxes-tags-demo"
-                      options={subjects}
-                      disableCloseOnSelect
-                      getOptionLabel={(option) => option.title}
-                      renderOption={(props, option, { selected }) => (
-                        <li {...props}>
-                          <Checkbox
-                            icon={icon}
-                            checkedIcon={checkedIcon}
-                            style={{ marginRight: 8 }}
-                            checked={selected}
-                            color="primary"
-                            
-                          />
-                          {option.title}
-                        </li>
-                      )}
-                      style={{ width: 500 , }}
-                      renderInput={(params) => (
-                        <TextField {...params}    sx={{color:'#000000' , backgroundColor:'#ffffff' , width:'85%' , borderRadius:'50' }}  />
-                      )}
-                    />
+                    <div className="App">
+                      <MultiSelect options={qualifications} selected={selectedQualifications} onChange={setSelectedQualifications} />
+                    </div>
 
                   </FormControl>
                   <FormMessage />

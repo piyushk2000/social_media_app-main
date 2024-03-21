@@ -22,13 +22,13 @@ const AllUsers = () => {
           <Loader />
         ) : (
           <>
-            <Tabs defaultValue="Student" className="w-full">
+            <Tabs defaultValue="connections" className="w-full">
 
 
               <TabsList className="mt-2 grid w-full grid-cols-3">
                 <TabsTrigger value="connections">My Connections</TabsTrigger>
                 <TabsTrigger value="Student">Student List</TabsTrigger>
-                <TabsTrigger value="Teacher">Teache Listr</TabsTrigger>
+                <TabsTrigger value="Teacher">Teacher List</TabsTrigger>
               </TabsList>
               <TabsContent value="connections">
               <ul className="user-grid">
