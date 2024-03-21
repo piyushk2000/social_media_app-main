@@ -378,6 +378,28 @@ export async function createEvent(event: INewEvent) {
 }
 
 // ============================== GET EVENT BY ID
+export async function getEvents(limit?: number) {
+  const queries: any[] = [Query.orderDesc("$createdAt")];
+
+  if (limit) {
+    queries.push(Query.limit(limit));
+  }
+
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.eventCollectionId,
+      queries
+    );
+
+    if (!users) throw Error;
+
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getEventById(eventId?: string) {
   if (!eventId) throw Error;
 
@@ -443,7 +465,7 @@ export async function deleteEvent(eventId?: string) {
 // ============================== CREATE MODULE
 export async function createModule(module: INewModule) {
   try {
-    // Create post
+
     const newModule = await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.moduleCollectionId,
@@ -451,7 +473,8 @@ export async function createModule(module: INewModule) {
       {
         name: module.name,
         description: module.description,
-        studylevel: module.studylevel
+        studylevel: module.studylevel,
+        studymethod: module.studymethod
       }
     );
 
@@ -467,6 +490,28 @@ export async function createModule(module: INewModule) {
 
 
 // ============================== GET MODULE BY ID
+export async function getModules(limit?: number) {
+  const queries: any[] = [Query.orderDesc("$createdAt")];
+
+  if (limit) {
+    queries.push(Query.limit(limit));
+  }
+
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.moduleCollectionId,
+      queries
+    );
+
+    if (!users) throw Error;
+
+    return users;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getModuletById(moduleId?: string) {
   if (!moduleId) throw Error;
 
@@ -496,7 +541,8 @@ export async function updateModule(module: IUpdateModule) {
       {
         name: module.name,
         description: module.description,
-        studylevel: module.studylevel
+        studylevel: module.studylevel,
+        studymethod: module.studymethod
       }
     );
 

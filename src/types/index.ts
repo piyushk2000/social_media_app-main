@@ -22,31 +22,33 @@ export type INewPost = {
 };
 
 export type INewEvent = {
-  eventId: string;
-  name: string;
-  description: string;
-  eventtime: string;
+  eventId?: string;
+  name?: string;
+  description?: string;
+  eventtime?: any;
 };
 
 export type IUpdateEvent = {
   eventId: string;
   name: string;
   description: string;
-  eventtime: string;
+  eventtime: any;
 };
 
 export type INewModule = {
-  moduleId: string;
-  name: string;
-  description: string;
-  studylevel: string;
+  moduleId?: string;
+  name?: string;
+  description?: string;
+  studylevel?: string;
+  studymethod?: string;
 };
 
 export type IUpdateModule = {
-  moduleId: string;
-  name: string;
-  description: string;
-  studylevel: string;
+  moduleId?: any;
+  name?: string;
+  description?: string;
+  studylevel?: string;
+  studymethod?: string;
 };
 
 export type IUpdatePost = {

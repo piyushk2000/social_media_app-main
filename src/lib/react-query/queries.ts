@@ -28,8 +28,12 @@ import {
   savePost,
   deleteSavedPost,
   getEventById,
+  updateModule,
+  updateEvent,
+  getEvents,
+  getModules,
 } from "@/lib/appwrite/api";
-import { INewPost, INewUser, IUpdatePost, IUpdateUser } from "@/types";
+import { INewPost, INewUser, IUpdatePost, IUpdateUser , IUpdateEvent, IUpdateModule } from "@/types";
 import { INewEvent, INewModule } from "@/types/index";
 
 // ============================================================
@@ -118,7 +122,7 @@ export const useCreateModule = () => {
 export const useUpdateModule = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: () => updateModule(module),
+    mutationFn: (module: IUpdateModule) => updateModule(module),
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
@@ -143,7 +147,7 @@ export const useDeleteModule = () => {
 export const useGetModules = (limit?: number) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_MODULES],
-    queryFn: () => useGetModules(limit),
+    queryFn: () => getModules(limit),
   });
 };
 
@@ -158,7 +162,7 @@ export const useGetModulesById = (moduleId: string) => {
 export const useCreateEvent = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (module: INewModule) => createEvent(module),
+    mutationFn: (module: INewEvent) => createEvent(module),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_EVENT],
@@ -170,7 +174,7 @@ export const useCreateEvent = () => {
 export const useUpdateEvent = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (event: IUpdatePost) => updatePost(event),
+    mutationFn: (event: IUpdateEvent) => updateEvent(event),
     onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_EVENT_BY_ID, data?.$id],
@@ -196,7 +200,7 @@ export const useDeleteEvent = () => {
 export const useGetEvents = (limit?: number) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_EVENTS],
-    queryFn: () => useGetEvents(limit),
+    queryFn: () => getEvents(limit),
   });
 };
 

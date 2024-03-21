@@ -113,6 +113,9 @@ const EventForm = ({ event, action }: EventFormProps) => {
       });
     }
     navigate("/");
+    toast({
+      title: `${action} Event Created`,
+    });
   };
 
   return (
@@ -180,8 +183,11 @@ const EventForm = ({ event, action }: EventFormProps) => {
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
                     mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
+                    // selected={field.value}
+                    onSelect={(selectedDate) => {
+                      console.log(selectedDate);
+                      field.onChange(selectedDate);
+                    }}
                     disabled={(date) =>
                       date > new Date() || date < new Date("1900-01-01")
                     }

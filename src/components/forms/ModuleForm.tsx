@@ -74,6 +74,9 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
       });
     }
     navigate("/");
+    toast({
+      title: `${action} module created`,
+    });
   };
 
   return (
@@ -113,7 +116,7 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
         />
         <FormField
           control={form.control}
-          name="studyMethod"
+          name="studymethod"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">Study Method</FormLabel>
