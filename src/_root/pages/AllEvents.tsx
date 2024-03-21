@@ -1,6 +1,6 @@
 import { useToast } from "@/components/ui/use-toast";
 import { Loader, ModuleCard } from "@/components/shared";
-import { useGetModules } from "@/lib/react-query/queries";
+import { useGetModules , useGetEvents } from "@/lib/react-query/queries";
 import {
   Accordion,
   AccordionContent,
@@ -27,7 +27,9 @@ import { useNavigate } from "react-router-dom";
 const AllEvents = () => {
   // const { toast } = useToast();
 
-  // const { data: modules, isLoading, isError: isErrorCreators } = useGetModules();
+  const { data: events, isLoading, isError: isErrorCreators } = useGetEvents();
+
+  console.log(events)
 
   // if (isErrorCreators) {
   //   toast({ title: "Something went wrong." });
