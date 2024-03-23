@@ -1,6 +1,6 @@
 import { useToast } from "@/components/ui/use-toast";
 import { Loader, ModuleCard } from "@/components/shared";
-import { useGetModules , useGetEvents } from "@/lib/react-query/queries";
+import { useGetModules, useGetEvents } from "@/lib/react-query/queries";
 import {
   Accordion,
   AccordionContent,
@@ -23,19 +23,30 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button } from "@/components/ui";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const AllEvents = () => {
-  // const { toast } = useToast();
+  const [eventData, setEventData] = useState([]);
+
+  const { toast } = useToast();
 
   const { data: events, isLoading, isError: isErrorCreators } = useGetEvents();
 
-  console.log(events)
+  useEffect(() => {
+    if (events.documents) {
+      setEventData(events.documents)
+      console.log(eventData)
+    }
 
-  // if (isErrorCreators) {
-  //   toast({ title: "Something went wrong." });
+  }, [events])
 
-  //   return;
-  // }
+  console.log(events.documents)
+
+  if (isErrorCreators) {
+    toast({ title: "Something went wrong." });
+
+    return;
+  }
 
   const navigate = useNavigate();
   const handelclick = (() => {
@@ -75,15 +86,18 @@ const AllEvents = () => {
 
 
             <TableBody>
-              <TableRow>
-                <TableCell className="min-w-1 max-w-1 font-medium">Science fair</TableCell>
-                <TableCell>
-                  name
-                </TableCell>
-
-                <TableCell>10/05/2000</TableCell>
-                <TableCell className="text-right align flex mt-10"><EditIcon /><DeleteIcon /><VisibilityIcon /></TableCell>
-              </TableRow>
+              {eventData.map((event) => (
+                <TableRow key={event.$id}>
+                  <TableCell className="min-w-1 max-w-1 font-medium">{event.name}</TableCell>
+                  <TableCell>{event.description}</TableCell>
+                  <TableCell>{new Date(event.eventtime).toLocaleDateString()}</TableCell>
+                  <TableCell className="text-right align flex mt-10">
+                    <EditIcon />
+                    <DeleteIcon />
+                    <VisibilityIcon />
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
