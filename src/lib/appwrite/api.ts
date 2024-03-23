@@ -528,7 +528,7 @@ export async function getModuletById(moduleId?: string) {
 
     if (!module) throw Error;
     return module;
-    
+
   } catch (error) {
     console.log(error);
   }

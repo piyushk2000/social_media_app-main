@@ -1,6 +1,6 @@
 import { useToast } from "@/components/ui/use-toast";
 import { Loader, ModuleCard } from "@/components/shared";
-import { useGetModules } from "@/lib/react-query/queries";
+import { useDeleteModule, useGetModules } from "@/lib/react-query/queries";
 import {
   Accordion,
   AccordionContent,
@@ -28,9 +28,14 @@ import EditIcon from '@mui/icons-material/Edit';
 const AllModules = () => {
   const [moduleData, setModuleData] = useState([]);
 
-  const { data: modules, isLoading, isError: isErrorCreators } = useGetModules();
+  const { data: modules, isLoading, isError: isErrorCreators , refetch: moduleRefetch } = useGetModules();
 
   console.log(modules)
+
+
+
+
+
 
   // useEffect(() => {
   //   if (modules.documents) {
@@ -40,11 +45,22 @@ const AllModules = () => {
 
   // }, [modules])
 
+  const { mutate: deleteModule } = useDeleteModule();
+
   // console.log(modules)
+  const handleDeleteModule = (id) => {
+    deleteModule({ moduleId: id });
+    moduleRefetch()
+    navigate("/all-modules")
+    // navigate(-1);
+    console.log(id)
+  };
+
 
   const navigate = useNavigate();
   const handelclick = (() => {
     navigate("/create-module")
+    
   })
 
   return (
@@ -96,7 +112,8 @@ const AllModules = () => {
                           <VisibilityIcon />
                         </Link>
 
-                        <DeleteIcon />
+                        <DeleteIcon onClick={() => handleDeleteModule(module.$id)} />
+
                       </TableCell>
                     </TableRow>
                   ))}

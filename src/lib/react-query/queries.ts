@@ -33,8 +33,10 @@ import {
   getEvents,
   getModules,
   getModuletById,
+  deleteEvent,
+  deleteModule,
 } from "@/lib/appwrite/api";
-import { INewPost, INewUser, IUpdatePost, IUpdateUser , IUpdateEvent, IUpdateModule } from "@/types";
+import { INewPost, INewUser, IUpdatePost, IUpdateUser, IUpdateEvent, IUpdateModule } from "@/types";
 import { INewEvent, INewModule } from "@/types/index";
 
 // ============================================================
@@ -132,18 +134,33 @@ export const useUpdateModule = () => {
   });
 };
 
+// export const useDeleteEvent = () => {
+//   const queryClient = useQueryClient();
+//   return useMutation({
+//     mutationFn: ({ eventId }: { eventId?: string; }) =>
+//       deleteEvent(eventId),
+//     onSuccess: () => {
+//       queryClient.invalidateQueries({
+//         queryKey: [QUERY_KEYS.GET_RECENT_EVENT],
+//       });
+//     },
+//   });
+// };
+
 export const useDeleteModule = () => {
   const queryClient = useQueryClient();
+  // console.log('delete')
   return useMutation({
-    mutationFn: ({ postId, imageId }: { postId?: string; imageId: string }) =>
-      deletePost(postId, imageId),
+    mutationFn: ({ moduleId }: { moduleId?: string; }) =>
+      deleteModule(moduleId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
+        queryKey: [QUERY_KEYS.GET_RECENT_MODULE],
       });
     },
   });
 };
+
 
 export const useGetModules = (limit?: number) => {
   return useQuery({
@@ -187,8 +204,8 @@ export const useUpdateEvent = () => {
 export const useDeleteEvent = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ postId, imageId }: { postId?: string; imageId: string }) =>
-      deletePost(postId, imageId),
+    mutationFn: ({ eventId }: { eventId?: string; }) =>
+      deleteEvent(eventId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_EVENT],

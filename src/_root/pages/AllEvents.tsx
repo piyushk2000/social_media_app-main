@@ -1,6 +1,6 @@
 import { useToast } from "@/components/ui/use-toast";
 import { Loader, ModuleCard } from "@/components/shared";
-import { useGetModules, useGetEvents } from "@/lib/react-query/queries";
+import { useGetModules, useGetEvents, useDeleteEvent } from "@/lib/react-query/queries";
 import {
   Accordion,
   AccordionContent,
@@ -30,7 +30,7 @@ const AllEvents = () => {
 
   const { toast } = useToast();
 
-  const { data: events, isLoading, isError: isErrorCreators } = useGetEvents();
+  const { data: events, isLoading, isError: isErrorCreators , refetch: eventRefetch } = useGetEvents();
 
   // console.log(events?.documents)
 
@@ -42,7 +42,15 @@ const AllEvents = () => {
 
   // }, [events])
 
+  const { mutate: deleteModule } = useDeleteEvent();
 
+  // console.log(modules)
+  const handleDeleteEvent = (id) => {
+    deleteModule({ eventId: id });
+    // navigate(-1);
+    console.log(id)
+    eventRefetch()
+  };
 
   if (isErrorCreators) {
     toast({ title: "Something went wrong." });
@@ -103,7 +111,7 @@ const AllEvents = () => {
                         <Link to={`/view-event/${event.$id}`}>
                           <VisibilityIcon />
                         </Link>
-                        <DeleteIcon />
+                        <DeleteIcon onClick={() => handleDeleteEvent(event.$id)} />
 
                       </TableCell>
                     </TableRow>
