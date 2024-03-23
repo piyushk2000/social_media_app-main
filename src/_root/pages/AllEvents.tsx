@@ -32,15 +32,17 @@ const AllEvents = () => {
 
   const { data: events, isLoading, isError: isErrorCreators } = useGetEvents();
 
-  useEffect(() => {
-    if (events.documents) {
-      setEventData(events.documents)
-      console.log(eventData)
-    }
+  // console.log(events?.documents)
 
-  }, [events])
+  // useEffect(() => {
+  //   if (events.documents) {
+  //     setEventData(events.documents)
+  //     console.log(eventData)
+  //   }
 
-  console.log(events.documents)
+  // }, [events])
+
+
 
   if (isErrorCreators) {
     toast({ title: "Something went wrong." });
@@ -72,8 +74,11 @@ const AllEvents = () => {
             </Button>
           </div>
 
-
-          <Table>
+          {isLoading && !events ? (
+          <Loader />
+        ) : (
+          <>
+             <Table>
             <TableCaption>Events</TableCaption>
             <TableHeader>
               <TableRow>
@@ -86,7 +91,7 @@ const AllEvents = () => {
 
 
             <TableBody>
-              {eventData.map((event) => (
+              {events?.documents.map((event) => (
                 <TableRow key={event.$id}>
                   <TableCell className="min-w-1 max-w-1 font-medium">{event.name}</TableCell>
                   <TableCell>{event.description}</TableCell>
@@ -100,6 +105,12 @@ const AllEvents = () => {
               ))}
             </TableBody>
           </Table>
+            
+          </>
+        )}
+
+
+         
         </div>
       </div>
 

@@ -14,6 +14,8 @@ const AllUsers = () => {
     return;
   }
 
+  console.log(creators)
+
   return (
     <div className="common-container">
       <div className="user-container">

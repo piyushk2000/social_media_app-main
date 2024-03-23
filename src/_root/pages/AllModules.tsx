@@ -30,15 +30,17 @@ const AllModules = () => {
 
   const { data: modules, isLoading, isError: isErrorCreators } = useGetModules();
 
-  useEffect(() => {
-    if (modules.documents) {
-      setModuleData(modules.documents)
-      console.log(moduleData)
-    }
+  // console.log(modules)
 
-  }, [modules])
+  // useEffect(() => {
+  //   if (modules.documents) {
+  //     setModuleData(modules.documents)
+  //     console.log(moduleData)
+  //   }
 
-  console.log(modules)
+  // }, [modules])
+
+  // console.log(modules)
 
   const navigate = useNavigate();
   const handelclick = (() => {
@@ -49,6 +51,7 @@ const AllModules = () => {
     <>
       <div className="flex flex-1">
         <div className="common-container">
+
           <div className="flex justify-between items-evenly w-full">
             <div className="max-w-5xl flex-start gap-3 justify-start w-full">
               <img
@@ -64,7 +67,11 @@ const AllModules = () => {
             </Button>
           </div>
 
-          <Table>
+          {isLoading && !modules ? (
+          <Loader />
+        ) : (
+          <>
+            <Table>
             <TableCaption>Modules</TableCaption>
             <TableHeader>
               <TableRow>
@@ -76,7 +83,7 @@ const AllModules = () => {
             </TableHeader>
 
             <TableBody>
-              {moduleData.map((module) => (
+              {modules?.documents.map((module) => (
                 <TableRow key={module.$id}>
                   <TableCell className="min-w-1 max-w-1 font-medium">{module.name}</TableCell>
                   <TableCell>{module.studyLevel}</TableCell>
@@ -90,6 +97,10 @@ const AllModules = () => {
               ))}
             </TableBody>
           </Table>
+          </>)}
+        
+
+          
         </div>
       </div>
     </>
