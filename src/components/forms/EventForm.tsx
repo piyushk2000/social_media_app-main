@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { Models } from "appwrite";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -46,9 +46,10 @@ const FormSchema = z.object({
 type EventFormProps = {
   event?: Models.Document;
   action: "Create" | "Update";
+  ViewEvent?: false | true
 };
 
-const EventForm = ({ event, action }: EventFormProps) => {
+const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useUserContext();
@@ -99,12 +100,13 @@ const EventForm = ({ event, action }: EventFormProps) => {
           title: `${action} post failed. Please try again.`,
         });
       }
-      return navigate(`/posts/${event.$id}`);
+      return navigate(-1);
     }
 
     // ACTION = CREATE
     const newEvent = await createEvent({
       ...value,
+      eventType: 'class'
     });
 
     if (!newEvent) {
@@ -112,7 +114,7 @@ const EventForm = ({ event, action }: EventFormProps) => {
         title: `${action} post failed. Please try again.`,
       });
     }
-    navigate("/");
+    navigate(-1);
     toast({
       title: `${action} Event Created`,
     });
@@ -127,6 +129,7 @@ const EventForm = ({ event, action }: EventFormProps) => {
         <FormField
           control={form.control}
           name="name"
+          disabled={ViewEvent}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">Name</FormLabel>
@@ -141,6 +144,7 @@ const EventForm = ({ event, action }: EventFormProps) => {
         <FormField
           control={form.control}
           name="description"
+          disabled={ViewEvent}
           render={({ field }) => (
             <FormItem>
               <FormLabel className="shad-form_label">Discription</FormLabel>
@@ -158,6 +162,7 @@ const EventForm = ({ event, action }: EventFormProps) => {
         <FormField
           control={form.control}
           name="eventtime"
+          disabled={ViewEvent}
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Date of birth</FormLabel>
@@ -165,6 +170,7 @@ const EventForm = ({ event, action }: EventFormProps) => {
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
+                    disabled={ViewEvent}
                       // variant={"outline"}
                       className={cn(
                         "w-[240px] pl-3 text-left font-normal",
@@ -199,22 +205,39 @@ const EventForm = ({ event, action }: EventFormProps) => {
             </FormItem>
           )}
         />
+        {ViewEvent ?
+          (
+            <div className="flex gap-4 items-center justify-end">
+              <Link to={`/update-event/${event.$id}`}>
+                <Button
 
-        <div className="flex gap-4 items-center justify-end">
-          <Button
-            type="button"
-            className="shad-button_dark_4"
-            onClick={() => navigate(-1)}>
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="shad-button_primary whitespace-nowrap"
-            disabled={isLoadingCreate || isLoadingUpdate}>
-            {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-            {action} Event
-          </Button>
-        </div>
+                  className="shad-button_primary whitespace-nowrap"
+                  disabled={isLoadingCreate || isLoadingUpdate}>
+                  {(isLoadingCreate || isLoadingUpdate) && <Loader />}
+                  Edit Event
+                </Button>
+              </Link>
+            </div>
+          )
+          :
+          (
+            <div className="flex gap-4 items-center justify-end">
+              <Button
+                type="button"
+                className="shad-button_dark_4"
+                onClick={() => navigate(-1)}>
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="shad-button_primary whitespace-nowrap"
+                disabled={isLoadingCreate || isLoadingUpdate}>
+                {(isLoadingCreate || isLoadingUpdate) && <Loader />}
+                {action} Event
+              </Button>
+            </div>
+          )}
+        
       </form>
     </Form>
   );

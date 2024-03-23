@@ -27,6 +27,10 @@ import CreateEvent from "./_root/pages/CreateEvent";
 import CreateModule from "./_root/pages/CreateModule";
 // import AllEvents from "./_root/pages/AllEvents";
 import AllModules from "./_root/pages/AllModules";
+import EditEvent from "./_root/pages/EditEvent";
+import EditModule from "./_root/pages/EditModule";
+import ViewEvent from "./_root/pages/viewEvent";
+import ViewModule from "./_root/pages/viewModule";
 
 const App = () => {
   return (
@@ -53,6 +57,10 @@ const App = () => {
           <Route path="/create-module" element={<CreateModule />} />
           <Route path="/all-modules" element={<AllModules />} />
           <Route path="/update-post/:id" element={<EditPost />} />
+          <Route path="/update-event/:id" element={<EditEvent />} />
+          <Route path="/view-event/:id" element={<ViewEvent />} />
+          <Route path="/update-module/:id" element={<EditModule />} />
+          <Route path="/view-module/:id" element={<ViewModule />} />
           <Route path="/posts/:id" element={<PostDetails />} />
           <Route path="/profile/:id/*" element={<Profile />} />
           <Route path="/update-profile/:id" element={<UpdateProfile />} />

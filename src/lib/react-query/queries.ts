@@ -32,6 +32,7 @@ import {
   updateEvent,
   getEvents,
   getModules,
+  getModuletById,
 } from "@/lib/appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser , IUpdateEvent, IUpdateModule } from "@/types";
 import { INewEvent, INewModule } from "@/types/index";
@@ -154,7 +155,7 @@ export const useGetModules = (limit?: number) => {
 export const useGetModulesById = (moduleId: string) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_MODULE_BY_ID, moduleId],
-    queryFn: () => useGetModulesById(moduleId),
+    queryFn: () => getModuletById(moduleId),
     enabled: !!moduleId,
   });
 };

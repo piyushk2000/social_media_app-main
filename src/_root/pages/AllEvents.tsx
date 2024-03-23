@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button } from "@/components/ui";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const AllEvents = () => {
@@ -75,42 +75,47 @@ const AllEvents = () => {
           </div>
 
           {isLoading && !events ? (
-          <Loader />
-        ) : (
-          <>
-             <Table>
-            <TableCaption>Events</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="min-w-1 max-w-1">Event Name</TableHead>
-                <TableHead>Discription </TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
+            <Loader />
+          ) : (
+            <>
+              <Table>
+                <TableCaption>Events</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="min-w-1 max-w-1">Event Name</TableHead>
+                    <TableHead>Discription </TableHead>
+                    <TableHead>Date</TableHead>
+                    <TableHead className="">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
 
 
-            <TableBody>
-              {events?.documents.map((event) => (
-                <TableRow key={event.$id}>
-                  <TableCell className="min-w-1 max-w-1 font-medium">{event.name}</TableCell>
-                  <TableCell>{event.description}</TableCell>
-                  <TableCell>{new Date(event.eventtime).toLocaleDateString()}</TableCell>
-                  <TableCell className="text-right align flex mt-10">
-                    <EditIcon />
-                    <DeleteIcon />
-                    <VisibilityIcon />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-            
-          </>
-        )}
+                <TableBody>
+                  {events?.documents.map((event) => (
+                    <TableRow key={event.$id}>
+                      <TableCell className="min-w-1 max-w-1 font-medium">{event.name}</TableCell>
+                      <TableCell>{event.description}</TableCell>
+                      <TableCell>{new Date(event.eventtime).toLocaleDateString()}</TableCell>
+                      <TableCell className="text-right align flex mt-10">
+                        <Link to={`/update-event/${event.$id}`}>
+                          <EditIcon />
+                        </Link>
+                        <Link to={`/view-event/${event.$id}`}>
+                          <VisibilityIcon />
+                        </Link>
+                        <DeleteIcon />
+
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+
+            </>
+          )}
 
 
-         
+
         </div>
       </div>
 

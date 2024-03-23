@@ -77,5 +77,5 @@ export type INewUser = {
   email?: string;
   username?: string;
   password?: string;
-  userType: string;
+  userType?: string;
 };

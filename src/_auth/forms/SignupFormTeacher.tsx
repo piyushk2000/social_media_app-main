@@ -67,7 +67,7 @@ const SignupFormTeacher = () => {
       username: "",
       email: "",
       password: "",
-
+      userType:'teacher'
 
     },
   });
@@ -127,6 +127,8 @@ const SignupFormTeacher = () => {
 
         return;
       }
+
+      console.log(user)
 
       const session = await signInAccount({
         email: user.email,

@@ -441,6 +441,7 @@ export async function updateEvent(event: IUpdateEvent) {
       // If no new file uploaded, just throw error
       throw Error;
     }
+    console.log('event update')
     return updatedEvent;
   } catch (error) {
     console.log(error);
@@ -526,8 +527,8 @@ export async function getModuletById(moduleId?: string) {
     );
 
     if (!module) throw Error;
-
     return module;
+    
   } catch (error) {
     console.log(error);
   }
@@ -554,6 +555,7 @@ export async function updateModule(module: IUpdateModule) {
       // If no new file uploaded, just throw error
       throw Error;
     }
+    console.log('module update')
     return updatedEvent;
   } catch (error) {
     console.log(error);

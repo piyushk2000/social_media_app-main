@@ -1,7 +1,7 @@
 import * as z from "zod";
 import { Models } from "appwrite";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -24,9 +24,10 @@ import { useCreateModule, useUpdateModule } from "@/lib/react-query/queries";
 type moduleFormProps = {
   module?: Models.Document;
   action: "Create" | "Update";
+  ViewModule?: false | true
 };
 
-const ModuleForm = ({ module, action }: moduleFormProps) => {
+const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useUserContext();
@@ -36,8 +37,11 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
       name: module ? module?.name : "",
       description: module ? module?.description : "",
       studylevel: module ? module?.studylevel : "",
+      studymethod: module ? module?.studymethod : "",
     },
   });
+
+  console.log(ViewModule)
 
   // Query
   const { mutateAsync: createModule, isLoading: isLoadingCreate } = useCreateModule();
@@ -53,6 +57,7 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
         name: module.name,
         description: module.description,
         studylevel: module.studylevel,
+        studymethod: module.studymethod,
       });
 
       if (!updatedModule) {
@@ -60,7 +65,7 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
           title: `${action} module failed. Please try again.`,
         });
       }
-      return navigate(`/posts/${module.$id}`);
+      return navigate(-1);
     }
 
     // ACTION = CREATE
@@ -73,7 +78,7 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
         title: `${action} module failed. Please try again.`,
       });
     }
-    navigate("/");
+    navigate(-1);
     toast({
       title: `${action} module created`,
     });
@@ -144,21 +149,38 @@ const ModuleForm = ({ module, action }: moduleFormProps) => {
           )}
         />
 
-        <div className="flex gap-4 items-center justify-end">
-          <Button
-            type="button"
-            className="shad-button_dark_4"
-            onClick={() => navigate(-1)}>
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="shad-button_primary whitespace-nowrap"
-            disabled={isLoadingCreate || isLoadingUpdate}>
-            {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-            {action} Module
-          </Button>
-        </div>
+        {ViewModule ?
+          (
+            <div className="flex gap-4 items-center justify-end">
+              <Link to={`/update-module/${module.$id}`}>
+                <Button
+
+                  className="shad-button_primary whitespace-nowrap"
+                  disabled={isLoadingCreate || isLoadingUpdate}>
+                  {(isLoadingCreate || isLoadingUpdate) && <Loader />}
+                  Edit Event
+                </Button>
+              </Link>
+            </div>
+          )
+          :
+          (
+            <div className="flex gap-4 items-center justify-end">
+              <Button
+                type="button"
+                className="shad-button_dark_4"
+                onClick={() => navigate(-1)}>
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="shad-button_primary whitespace-nowrap"
+                disabled={isLoadingCreate || isLoadingUpdate}>
+                {(isLoadingCreate || isLoadingUpdate) && <Loader />}
+                {action} Event
+              </Button>
+            </div>
+          )}
       </form>
     </Form>
   );

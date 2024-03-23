@@ -26,6 +26,7 @@ const SignupForm = () => {
       username: "",
       email: "",
       password: "",
+      userType:'student'
     },
   });
 
@@ -38,6 +39,8 @@ const SignupForm = () => {
     
     try {
       const newUser = await createUserAccount(user);
+
+      console.log(user)
 
       if (!newUser) {
         toast({ title: "Sign up failed. Please try again.", });

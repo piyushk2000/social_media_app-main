@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import AddIcon from '@mui/icons-material/Add';
@@ -30,7 +30,7 @@ const AllModules = () => {
 
   const { data: modules, isLoading, isError: isErrorCreators } = useGetModules();
 
-  // console.log(modules)
+  console.log(modules)
 
   // useEffect(() => {
   //   if (modules.documents) {
@@ -68,39 +68,44 @@ const AllModules = () => {
           </div>
 
           {isLoading && !modules ? (
-          <Loader />
-        ) : (
-          <>
-            <Table>
-            <TableCaption>Modules</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="min-w-1 max-w-1">Module Name</TableHead>
-                <TableHead>Study Level</TableHead>
-                <TableHead>Study Method</TableHead>
-                <TableHead className="">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
+            <Loader />
+          ) : (
+            <>
+              <Table>
+                <TableCaption>Modules</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="min-w-1 max-w-1">Module Name</TableHead>
+                    <TableHead>Study Level</TableHead>
+                    <TableHead>Study Method</TableHead>
+                    <TableHead className="">Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
 
-            <TableBody>
-              {modules?.documents.map((module) => (
-                <TableRow key={module.$id}>
-                  <TableCell className="min-w-1 max-w-1 font-medium">{module.name}</TableCell>
-                  <TableCell>{module.studyLevel}</TableCell>
-                  <TableCell>{module.studyMethod}</TableCell>
-                  <TableCell className="text-right align flex mt-10">
-                    <EditIcon />
-                    <DeleteIcon />
-                    <VisibilityIcon />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          </>)}
-        
+                <TableBody>
+                  {modules?.documents.map((module) => (
+                    <TableRow key={module.$id}>
+                      <TableCell className="min-w-1 max-w-1 font-medium">{module.name}</TableCell>
+                      <TableCell>{module.studylevel}</TableCell>
+                      <TableCell>{module.studymethod}</TableCell>
+                      <TableCell className="text-right align flex mt-10">
+                        <Link to={`/update-module/${module.$id}`}>
+                          <EditIcon />
+                        </Link>
+                        <Link to={`/view-module/${module.$id}`}>
+                          <VisibilityIcon />
+                        </Link>
 
-          
+                        <DeleteIcon />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </>)}
+
+
+
         </div>
       </div>
     </>
