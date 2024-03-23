@@ -28,6 +28,7 @@ export async function createUserAccount(user: INewUser) {
       email: newAccount.email,
       username: user.username,
       imageUrl: avatarUrl,
+      userType: user.userType,
     });
 
     return newUser;
@@ -44,6 +45,7 @@ export async function saveUserToDB(user: {
   name: string;
   imageUrl: URL;
   username?: string;
+  userType: string;
 }) {
   try {
     const newUser = await databases.createDocument(
@@ -363,7 +365,8 @@ export async function createEvent(event: INewEvent) {
       {
         name: event.name,
         description: event.description,
-        eventtime: event.eventtime
+        eventtime: event.eventtime,
+        eventType: event.eventType
       }
     );
 

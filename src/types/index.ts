@@ -26,6 +26,7 @@ export type INewEvent = {
   name?: string;
   description?: string;
   eventtime?: any;
+  eventType: string;
 };
 
 export type IUpdateEvent = {
@@ -68,6 +69,7 @@ export type IUser = {
   email: string;
   imageUrl: string;
   bio: string;
+  userType: string;
 };
 
 export type INewUser = {
@@ -75,4 +77,5 @@ export type INewUser = {
   email?: string;
   username?: string;
   password?: string;
+  userType: string;
 };
