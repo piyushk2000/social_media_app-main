@@ -14,7 +14,9 @@ const AllUsers = () => {
     return;
   }
 
-  console.log(creators)
+  // Separate the users based on userType
+  const students = creators?.documents.filter((creator) => creator.userType === "student");
+  const teachers = creators?.documents.filter((creator) => creator.userType === "teacher");
 
   return (
     <div className="common-container">
@@ -25,31 +27,39 @@ const AllUsers = () => {
         ) : (
           <>
             <Tabs defaultValue="connections" className="w-full">
-
-
               <TabsList className="mt-2 grid w-full grid-cols-3">
                 <TabsTrigger value="connections">My Connections</TabsTrigger>
                 <TabsTrigger value="Student">Student List</TabsTrigger>
                 <TabsTrigger value="Teacher">Teacher List</TabsTrigger>
               </TabsList>
               <TabsContent value="connections">
-              <ul className="user-grid">
-              {creators?.documents.map((creator) => (
-                <li key={creator?.$id} className="flex-1 min-w-[200px] w-full  ">
-                  <UserCard user={creator} />
-                </li>
-              ))}
-            </ul>
+                <ul className="user-grid">
+                  {creators?.documents.map((creator) => (
+                    <li key={creator?.$id} className="flex-1 min-w-[200px] w-full  ">
+                      <UserCard user={creator} />
+                    </li>
+                  ))}
+                </ul>
               </TabsContent>
               <TabsContent value="Student">
-                students
+                <ul className="user-grid">
+                  {students?.map((student) => (
+                    <li key={student?.$id} className="flex-1 min-w-[200px] w-full  ">
+                      <UserCard user={student} />
+                    </li>
+                  ))}
+                </ul>
               </TabsContent>
               <TabsContent value="Teacher">
-                teachers
+                <ul className="user-grid">
+                  {teachers?.map((teacher) => (
+                    <li key={teacher?.$id} className="flex-1 min-w-[200px] w-full  ">
+                      <UserCard user={teacher} />
+                    </li>
+                  ))}
+                </ul>
               </TabsContent>
-
             </Tabs>
-            
           </>
         )}
       </div>
