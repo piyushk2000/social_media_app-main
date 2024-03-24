@@ -79,4 +79,5 @@ export type INewUser = {
   username?: string;
   password?: string;
   userType?: string;
+  bio?: string;
 };

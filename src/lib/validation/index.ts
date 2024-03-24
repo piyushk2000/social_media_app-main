@@ -17,8 +17,9 @@ export const SignupValidationTeacher = z.object({
   email: z.string().email(),
   password: z.string().min(8, { message: "Password must be at least 8 characters." }),
   userType: z.string(),
-  subjects: z.array(z.string()), 
-  qualifications: z.array(z.string()),
+  bio: z.any(),
+  // subjects: z.array(z.string()), 
+  // qualifications: z.array(z.string()),
 
 });
 

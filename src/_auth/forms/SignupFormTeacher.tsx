@@ -67,7 +67,8 @@ const SignupFormTeacher = () => {
       username: "",
       email: "",
       password: "",
-      userType:'teacher'
+      bio: "",
+      userType: 'teacher'
 
     },
   });
@@ -79,7 +80,7 @@ const SignupFormTeacher = () => {
   ];
   const [selected, setSelected] = React.useState<string[]>([]);
   const [selectedQualifications, setSelectedQualifications] = React.useState<string[]>([]);
-  
+
   const qualifications: OptionType[] = [
     { label: 'GCSE (General Certificate of Secondary Education)', value: 'gcse' },
     { label: 'A-levels (Advanced Level)', value: 'a_levels' },
@@ -92,7 +93,7 @@ const SignupFormTeacher = () => {
     { label: 'NVQ (National Vocational Qualification)', value: 'nvq' },
     { label: 'PGCE (Postgraduate Certificate in Education)', value: 'pgce' }
   ];
-  
+
   const subjects: OptionType[] = [
     { label: 'Mathematics', value: 'mathematics' },
     { label: 'English Language', value: 'english_language' },
@@ -110,7 +111,7 @@ const SignupFormTeacher = () => {
     { label: 'Psychology', value: 'psychology' },
     { label: 'Technology', value: 'technology' }
   ];
-  
+
 
   // Queries
   const { mutateAsync: createUserAccount, isLoading: isCreatingAccount } = useCreateUserAccount();
@@ -118,13 +119,17 @@ const SignupFormTeacher = () => {
 
   // Handler
   const handleSignup = async (user: z.infer<typeof SignupValidationTeacher>) => {
-
+    // console.log(user)
+    // console.log(selectedQualifications)
+    // console.log(selected)
+    user.bio = JSON.stringify({ qualifications: selectedQualifications, subject: selected , bio:"" })
+    // console.log(user)
     try {
       const newUser = await createUserAccount(user);
 
       if (!newUser) {
         toast({ title: "Sign up failed. Please try again.", });
-
+        
         return;
       }
 
@@ -226,46 +231,20 @@ const SignupFormTeacher = () => {
               )}
             />
 
-            <FormField
-              control={form.control}
-              name="subjects"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="shad-form_label">subjects</FormLabel>
-                  <FormControl>
-                  <div className="App">
-                      <MultiSelect options={subjects} selected={selected} onChange={setSelected}  />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <label className="shad-form_label -mb-2">Subjects</label>
+            <div className="App">
+              <MultiSelect options={subjects} selected={selected} onChange={setSelected} />
+            </div>
 
-
-
-
-            <FormField
-              control={form.control}
-              name="qualifications"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="shad-form_label">Qualifications</FormLabel>
-                  <FormControl>
-                    <div className="App">
-                      <MultiSelect options={qualifications} selected={selectedQualifications} onChange={setSelectedQualifications} />
-                    </div>
-
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <label className="shad-form_label -mb-2">Qualifications</label>
+            <div className="App">
+              <MultiSelect options={qualifications} selected={selectedQualifications} onChange={setSelectedQualifications} />
+            </div>
 
             <Button type="submit" className="shad-button_primary">
               {isCreatingAccount || isSigningInUser || isUserLoading ? (
                 <div className="flex-center gap-2">
-                  <Loader /> Loading...
+                  <Loader/> Loading...
                 </div>
               ) : (
                 "Sign Up"
