@@ -28,7 +28,7 @@ const AllUsers = () => {
           <>
             <Tabs defaultValue="connections" className="w-full">
               <TabsList className="mt-2 grid w-full grid-cols-3">
-                <TabsTrigger value="connections">My Connections</TabsTrigger>
+                <TabsTrigger value="connections">All Users</TabsTrigger>
                 <TabsTrigger value="Student">Student List</TabsTrigger>
                 <TabsTrigger value="Teacher">Teacher List</TabsTrigger>
               </TabsList>
