@@ -12,6 +12,7 @@ import { LikedPosts } from "@/_root/pages";
 import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queries";
 import { GridPostList, Loader } from "@/components/shared";
+import { useEffect, useState } from "react";
 
 interface StabBlockProps {
   value: string | number;
@@ -25,12 +26,30 @@ const StatBlock = ({ value, label }: StabBlockProps) => (
   </div>
 );
 
+
+
 const Profile = () => {
   const { id } = useParams();
   const { user } = useUserContext();
   const { pathname } = useLocation();
+  const [otherField, setOtherField] = useState(null)
 
   const { data: currentUser } = useGetUserById(id || "");
+
+  useEffect(() => {
+    console.log(currentUser)
+    if (currentUser && currentUser.hasOwnProperty('bio')) {
+      try {
+        const bioObject = JSON.parse(currentUser.bio);
+        console.log('qualifications', bioObject.qualifications)
+        setOtherField(bioObject)
+      } catch {
+        console.log('json invalid')
+      }
+    }
+    console.log("otherfield", otherField)
+  }, [currentUser])
+  
 
   if (!currentUser)
     return (
@@ -38,6 +57,8 @@ const Profile = () => {
         <Loader />
       </div>
     );
+
+
 
   return (
     <div className="profile-container">
@@ -67,7 +88,7 @@ const Profile = () => {
             </div>
 
             <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
-              {currentUser.bio}
+              {(otherField?.bio) ? (<>{otherField?.bio}</>) : (<></>)}
             </p>
           </div>
 
@@ -75,9 +96,8 @@ const Profile = () => {
             <div className={`${user.id !== currentUser.$id && "hidden"}`}>
               <Link
                 to={`/update-profile/${currentUser.$id}`}
-                className={`h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg ${
-                  user.id !== currentUser.$id && "hidden"
-                }`}>
+                className={`h-12 bg-dark-4 px-5 text-light-1 flex-center gap-2 rounded-lg ${user.id !== currentUser.$id && "hidden"
+                  }`}>
                 <img
                   src={"/assets/icons/edit.svg"}
                   alt="edit"
@@ -102,9 +122,8 @@ const Profile = () => {
         <div className="flex max-w-5xl w-full">
           <Link
             to={`/profile/${id}`}
-            className={`profile-tab rounded-l-lg ${
-              pathname === `/profile/${id}` && "!bg-dark-3"
-            }`}>
+            className={`profile-tab rounded-l-lg ${pathname === `/profile/${id}` && "!bg-dark-3"
+              }`}>
             <img
               src={"/assets/icons/posts.svg"}
               alt="posts"
@@ -115,9 +134,8 @@ const Profile = () => {
           </Link>
           <Link
             to={`/profile/${id}/liked-posts`}
-            className={`profile-tab rounded-r-lg ${
-              pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
-            }`}>
+            className={`profile-tab rounded-r-lg ${pathname === `/profile/${id}/liked-posts` && "!bg-dark-3"
+              }`}>
             <img
               src={"/assets/icons/like.svg"}
               alt="like"
