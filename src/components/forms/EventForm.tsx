@@ -59,6 +59,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
       name: event ? event?.name : "",
       description: event ? event.description : "",
       eventtime: event ? event.eventtime : "",
+      eventsType: event ? event.eventsType : "event",
     },
   });
 
@@ -93,6 +94,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
         name: event.name,
         description: event.description,
         eventtime: event.eventtime,
+        eventsType: event.eventsType,
       });
 
       if (!updatedEvent) {
@@ -106,7 +108,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
     // ACTION = CREATE
     const newEvent = await createEvent({
       ...value,
-      eventType: 'class'
+      eventsType: 'event'
     });
 
     if (!newEvent) {

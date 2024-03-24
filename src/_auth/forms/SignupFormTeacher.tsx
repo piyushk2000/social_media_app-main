@@ -234,7 +234,7 @@ const SignupFormTeacher = () => {
                   <FormLabel className="shad-form_label">subjects</FormLabel>
                   <FormControl>
                   <div className="App">
-                      <MultiSelect options={subjects} selected={selected} onChange={setSelected} />
+                      <MultiSelect options={subjects} selected={selected} onChange={setSelected}  />
                     </div>
                   </FormControl>
                   <FormMessage />

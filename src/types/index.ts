@@ -26,7 +26,7 @@ export type INewEvent = {
   name?: string;
   description?: string;
   eventtime?: any;
-  eventType: string;
+  eventsType: string;
 };
 
 export type IUpdateEvent = {
@@ -34,6 +34,7 @@ export type IUpdateEvent = {
   name: string;
   description: string;
   eventtime: any;
+  eventsType: any;
 };
 
 export type INewModule = {

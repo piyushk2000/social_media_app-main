@@ -52,6 +52,7 @@ export const PostValidation = z.object({
 export const EventValidation = z.object({
   name: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
   description: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
+  eventsType: z.string(),
   eventtime: z.date(),
 });
 

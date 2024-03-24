@@ -366,7 +366,7 @@ export async function createEvent(event: INewEvent) {
         name: event.name,
         description: event.description,
         eventtime: event.eventtime,
-        eventType: event.eventType
+        eventsType: event.eventsType
       }
     );
 
@@ -432,7 +432,8 @@ export async function updateEvent(event: IUpdateEvent) {
       {
         name: event.name,
         description: event.description,
-        eventtime: event.eventtime
+        eventtime: event.eventtime,
+        eventsType: event.eventsType
       }
     );
 
