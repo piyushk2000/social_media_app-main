@@ -167,7 +167,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
           disabled={ViewEvent}
           render={({ field }) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of birth</FormLabel>
+              <FormLabel>Date of Event</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -197,7 +197,8 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
                       field.onChange(selectedDate);
                     }}
                     disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
+                      // date > new Date() || date < new Date("1900-01-01")
+                      date < new Date("1900-01-01")
                     }
                     initialFocus
                   />
