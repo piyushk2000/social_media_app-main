@@ -13,6 +13,10 @@ import { useUserContext } from "@/context/AuthContext";
 import { useGetUserById } from "@/lib/react-query/queries";
 import { GridPostList, Loader } from "@/components/shared";
 import { useEffect, useState } from "react";
+import React from "react";
+import { MultiSelect, OptionType } from "@/components/ui/multi-select";
+import { Badge } from "@/components/ui/badge";
+import { X } from "lucide-react";
 
 interface StabBlockProps {
   value: string | number;
@@ -34,7 +38,65 @@ const Profile = () => {
   const { pathname } = useLocation();
   const [otherField, setOtherField] = useState(null)
 
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const [selectedQualifications, setSelectedQualifications] = React.useState<string[]>([]);
+  const [CurrentBio, setBio] = React.useState(null)
+
+  const qualifications: OptionType[] = [
+    { label: 'GCSE (General Certificate of Secondary Education)', value: 'gcse' },
+    { label: 'A-levels (Advanced Level)', value: 'a_levels' },
+    { label: 'BTEC (Business and Technology Education Council)', value: 'btec' },
+    { label: 'Foundation Degree', value: 'foundation_degree' },
+    { label: "Bachelor's Degree", value: 'bachelors_degree' },
+    { label: "Master's Degree", value: 'masters_degree' },
+    { label: 'Doctorate (Ph.D.)', value: 'phd' },
+    { label: 'HND (Higher National Diploma)', value: 'hnd' },
+    { label: 'NVQ (National Vocational Qualification)', value: 'nvq' },
+    { label: 'PGCE (Postgraduate Certificate in Education)', value: 'pgce' }
+  ];
+
+  const subjects: OptionType[] = [
+    { label: 'Mathematics', value: 'mathematics' },
+    { label: 'English Language', value: 'english_language' },
+    { label: 'Sciences', value: 'sciences' },
+    { label: 'History', value: 'history' },
+    { label: 'Geography', value: 'geography' },
+    { label: 'Literature', value: 'literature' },
+    { label: 'Foreign Languages', value: 'foreign_languages' },
+    { label: 'Computer Science', value: 'computer_science' },
+    { label: 'Art and Design', value: 'art_and_design' },
+    { label: 'Music', value: 'music' },
+    { label: 'Physical Education', value: 'physical_education' },
+    { label: 'Religious Studies or Ethics', value: 'religious_studies_or_ethics' },
+    { label: 'Home Economics', value: 'home_economics' },
+    { label: 'Psychology', value: 'psychology' },
+    { label: 'Technology', value: 'technology' }
+  ];
+
+  // Queries
   const { data: currentUser } = useGetUserById(id || "");
+  // console.log(currentUser)
+
+  useEffect(() => {
+    console.log(currentUser)
+    if (currentUser && currentUser.hasOwnProperty('bio')) {
+      try {
+        const bioObject = JSON.parse(currentUser.bio);
+        console.log('qualifications', bioObject?.qualifications)
+        setSelectedQualifications(bioObject?.qualifications)
+        setSelected(bioObject?.subject)
+        setBio(bioObject?.bio)
+        setOtherField(bioObject)
+      } catch {
+        console.log('json invalid')
+      }
+    }
+    console.log("otherfield", otherField)
+  }, [currentUser])
+
+
+
+
 
   useEffect(() => {
     console.log(currentUser)
@@ -49,7 +111,7 @@ const Profile = () => {
     }
     console.log("otherfield", otherField)
   }, [currentUser])
-  
+
 
   if (!currentUser)
     return (
@@ -86,10 +148,68 @@ const Profile = () => {
               <StatBlock value={20} label="Followers" />
               <StatBlock value={20} label="Following" />
             </div>
+            <>
 
-            <p className="small-medium md:base-medium text-center xl:text-left mt-7 max-w-screen-sm">
-              {(otherField?.bio) ? (<>{otherField?.bio}</>) : (<></>)}
-            </p>
+
+              {(CurrentBio) &&
+                (<>
+                  <div className="App mt-5">
+                    <label className="shad-form_label -mb-2">Bio</label>
+                    <p className="small-medium md:base-medium text-center xl:text-left max-w-screen-sm">
+                      {CurrentBio}
+                    </p>
+                  </div>
+                </>
+                )}
+
+              {(selected.length !== 0) &&
+                (<>
+                  <div className="App mt-5">
+                    <label className="shad-form_label -mb-2">Subjects</label>
+                    <div className="flex gap-1 flex-wrap">
+                      {selected.map((item) => (
+                        <Badge
+                          // variant="outline"
+                          key={item}
+                          className="mr-1 mb-1 mt-1"
+
+                        >
+                          {item}
+                          <button
+                            className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                          </button>
+                        </Badge>
+                      ))}
+
+                    </div>
+                  </div>
+                </>)}
+              {(selectedQualifications.length !== 0) &&
+                (<>
+                  <div className="App mt-5">
+                    <label className="shad-form_label -mb-2">Qualifications</label>
+                    <div className="flex gap-1 flex-wrap">
+                      {selectedQualifications.map((item) => (
+                        <Badge
+                          // variant="outline"
+                          key={item}
+                          className="mr-1 mb-1 mt-1"
+
+                        >
+                          {item}
+                          <button
+                            className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </>)}
+
+
+
+            </>
+
           </div>
 
           <div className="flex justify-center gap-4">

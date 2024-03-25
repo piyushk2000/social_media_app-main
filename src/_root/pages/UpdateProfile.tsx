@@ -40,7 +40,7 @@ const UpdateProfile = () => {
 
   const [selected, setSelected] = React.useState<string[]>([]);
   const [selectedQualifications, setSelectedQualifications] = React.useState<string[]>([]);
-  const [CurrentBio , setBio] = React.useState("")
+  const [CurrentBio, setBio] = React.useState("")
 
   const qualifications: OptionType[] = [
     { label: 'GCSE (General Certificate of Secondary Education)', value: 'gcse' },
@@ -110,8 +110,8 @@ const UpdateProfile = () => {
 
   // Handler
   const handleUpdate = async (value: z.infer<typeof ProfileValidation>) => {
-    console.log("bio",value.bio)
-    const newBio = JSON.stringify({ qualifications: selectedQualifications, subject: selected , bio:CurrentBio })
+    console.log("bio", value.bio)
+    const newBio = JSON.stringify({ qualifications: selectedQualifications, subject: selected, bio: CurrentBio })
 
     const updatedUser = await updateUser({
       userId: currentUser.$id,
@@ -223,32 +223,33 @@ const UpdateProfile = () => {
               )}
             />
 
-            
+            <label className="shad-form_label -mb-2">Bio</label>
+            <Textarea
+              value={CurrentBio}
+              onChange={handleChange}
+              className="shad-textarea custom-scrollbar"
+            />
 
-            {(currentUser.userType=="teacher")?(
-            <>
             <label className="shad-form_label -mb-2">Subjects</label>
             <div className="App">
               <MultiSelect options={subjects} selected={selected} onChange={setSelected} />
             </div>
+            {(currentUser.userType == "teacher") ? (
+              <>
 
-            <label className="shad-form_label -mb-2">Qualifications</label>
-            <div className="App">
-              <MultiSelect options={qualifications} selected={selectedQualifications} onChange={setSelectedQualifications} />
-            </div>
-            </>
+
+                <label className="shad-form_label -mb-2">Qualifications</label>
+                <div className="App">
+                  <MultiSelect options={qualifications} selected={selectedQualifications} onChange={setSelectedQualifications} />
+                </div>
+              </>
             )
-            :
-            (<></>)}
-            
+              :
+              (<></>)}
 
 
-            <label className="shad-form_label -mb-2">Bio</label>
-            <Textarea
-            value={CurrentBio}
-            onChange={handleChange}
-              className="shad-textarea custom-scrollbar"
-            />
+
+
 
             <div className="flex gap-4 items-center justify-end">
               <Button
