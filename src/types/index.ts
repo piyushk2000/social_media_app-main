@@ -39,17 +39,25 @@ export type IUpdateEvent = {
 
 export type INewModule = {
   moduleId?: string;
+  userId: string;
   name?: string;
   description?: string;
   studylevel?: string;
+  studylevel2?: string;
+  studylevel3?: string;
+  status?: string;
   studymethod?: string;
 };
 
 export type IUpdateModule = {
   moduleId?: any;
+  userId: string;
   name?: string;
   description?: string;
   studylevel?: string;
+  studylevel2?: string;
+  studylevel3?: string;
+  status?: string;
   studymethod?: string;
 };
 

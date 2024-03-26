@@ -478,9 +478,13 @@ export async function createModule(module: INewModule) {
       appwriteConfig.moduleCollectionId,
       ID.unique(),
       {
+        userId: module.userId,
         name: module.name,
         description: module.description,
         studylevel: module.studylevel,
+        studylevel2: module.studylevel2,
+        studylevel3: module.studylevel3,
+        status: module.status,
         studymethod: module.studymethod
       }
     );
@@ -505,15 +509,15 @@ export async function getModules(limit?: number) {
   }
 
   try {
-    const users = await databases.listDocuments(
+    const modules = await databases.listDocuments(
       appwriteConfig.databaseId,
       appwriteConfig.moduleCollectionId,
       queries
     );
 
-    if (!users) throw Error;
+    if (!modules) throw Error;
 
-    return users;
+    return modules;
   } catch (error) {
     console.log(error);
   }
@@ -578,6 +582,26 @@ export async function deleteModule(moduleId?: string) {
 
     if (!statusCode) throw Error;
     return { status: "Ok" };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+// ============================== GET USER'S Module
+export async function getUserModules(userId?: string) {
+  if (!userId) return;
+
+  try {
+    const modules = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.moduleCollectionId,
+      [Query.equal("users", userId), Query.orderDesc("$createdAt")]
+    );
+
+    if (!modules) throw Error;
+
+    return modules;
   } catch (error) {
     console.log(error);
   }
