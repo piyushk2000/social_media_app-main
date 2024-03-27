@@ -152,6 +152,8 @@ export async function createPost(post: INewPost) {
         imageId: uploadedFile.$id,
         location: post.location,
         tags: tags,
+        type: post.type,
+        datetime: post.datetime,
       }
     );
 
@@ -308,7 +310,9 @@ export async function updatePost(post: IUpdatePost) {
         imageUrl: image.imageUrl,
         imageId: image.imageId,
         location: post.location,
-        tags: tags
+        tags: tags,
+        type: post.type,
+        datetime: post.datetime,
       }
     );
 

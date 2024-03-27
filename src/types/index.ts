@@ -19,6 +19,8 @@ export type INewPost = {
   file?: File[];
   location?: string;
   tags?: string;
+  type?: string;
+  datetime?: string;
 };
 
 export type INewEvent = {
@@ -69,6 +71,8 @@ export type IUpdatePost = {
   file?: File[];
   location?: string;
   tags?: string;
+  type?: string;
+  datetime?: string;
 };
 
 export type IUser = {
