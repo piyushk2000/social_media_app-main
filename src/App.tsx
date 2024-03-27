@@ -31,6 +31,7 @@ import EditEvent from "./_root/pages/EditEvent";
 import EditModule from "./_root/pages/EditModule";
 import ViewEvent from "./_root/pages/viewEvent";
 import ViewModule from "./_root/pages/viewModule";
+import ClassesCalender from "./_root/pages/ClassesCalender";
 
 const App = () => {
   return (
@@ -64,6 +65,7 @@ const App = () => {
           <Route path="/posts/:id" element={<PostDetails />} />
           <Route path="/profile/:id/*" element={<Profile />} />
           <Route path="/update-profile/:id" element={<UpdateProfile />} />
+          <Route path="/classes" element={<ClassesCalender />} />
         </Route>
       </Routes>
 
