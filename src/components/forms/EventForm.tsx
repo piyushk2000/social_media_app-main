@@ -60,7 +60,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
     defaultValues: {
       name: event ? event?.name : "",
       description: event ? event.description : "",
-      eventtime: event ? event.eventtime : "",
+      eventtime: event ? new Date(event.eventtime) : null,
       eventsType: event ? event.eventsType : "event",
     },
   });
@@ -102,12 +102,12 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
     // ACTION = UPDATE
     if (event && action === "Update") {
       const updatedEvent = await updateEvent({
-        ...value,
         eventId: event.$id,
         name: event.name,
         description: event.description,
         eventtime: event.eventtime,
         eventsType: event.eventsType,
+        ...value,
       });
 
       if (!updatedEvent) {
