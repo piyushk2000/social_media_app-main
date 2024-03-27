@@ -33,55 +33,6 @@ export interface EventType {
   id?: string;
 }
 const localizer = momentLocalizer(moment);
-const Events: EventType[] = [
-  {
-    title: "Twice event For two Days",
-    allDay: true,
-    start: new Date(y, m, 3),
-    end: new Date(y, m, 5),
-    color: "default",
-  },
-  {
-    title: "Learn ReactJs",
-    start: new Date(y, m, d + 3, 10, 30),
-    end: new Date(y, m, d + 3, 11, 30),
-    allDay: false,
-    color: "green",
-  },
-  {
-    title: "Launching MaterialArt Angular",
-    start: new Date(y, m, d + 7, 12, 0),
-    end: new Date(y, m, d + 7, 14, 0),
-    allDay: false,
-    color: "red",
-  },
-  {
-    title: "Lunch with Mr.Raw",
-    start: new Date(y, m, d - 2),
-    end: new Date(y, m, d - 2),
-    allDay: true,
-    color: "azure",
-  },
-  {
-    title: "Going For Party of Sahs",
-    start: new Date(y, m, d + 1, 19, 0),
-    end: new Date(y, m, d + 1, 22, 30),
-    allDay: false,
-    color: "azure",
-  },
-  {
-    title: "Learn Ionic",
-    start: new Date(y, m, 23),
-    end: new Date(y, m, 25),
-    color: "warning",
-  },
-  {
-    title: "Research of making own Browser",
-    start: new Date(y, m, 19),
-    end: new Date(y, m, 22),
-    color: "default",
-  },
-];
 
 export default function EventCalender() {
   const [showEventDetails, setShowEventDetails] = React.useState(false);
@@ -158,7 +109,7 @@ export default function EventCalender() {
               <div className="grid grid-cols-5 items-center gap-4">
                 <p className="col-span-2 text-[#FFF]">Date</p>
                 <p className="col-span-3 text-[#FFF]">
-                  {moment(selectedEvent?.start).format("DD MMM YYYY")}
+                  {moment(selectedEvent?.start).format("DD MMMM YYYY hh:mm A")}
                 </p>
               </div>
               <div className="grid grid-cols-5 items-center gap-4">
