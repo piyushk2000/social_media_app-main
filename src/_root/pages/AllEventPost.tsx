@@ -6,8 +6,9 @@ import { Loader, PostCard, UserCard } from "@/components/shared";
 import { useGetRecentPosts, useGetUsers } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui";
 import { useEffect, useState } from "react";
+import EventPostCard from "@/components/shared/EventPostCard";
 
-const Home = () => {
+const EventPost = () => {
   // const { toast } = useToast();
 
   const {
@@ -23,14 +24,17 @@ const Home = () => {
 
   const [events, setEvents] = useState([]);
 
+
+
   // Assuming postData is the state variable containing the data
   // const [postData, setPostData] = useState({ total: 0, documents: [] });
 
   useEffect(() => {
-    const filteredEvents = posts?.documents.filter(post => post.type != 'event');
+    const filteredEvents = posts?.documents.filter(post => post.type == 'event');
     setEvents(filteredEvents);
     console.log(events)
   }, [posts]);
+  // console.log(posts)
 
   if (isErrorPosts || isErrorCreators) {
     return (
@@ -46,17 +50,17 @@ const Home = () => {
   }
   const navigate = useNavigate();
  const handelclick = (()=>{
-  navigate("/create-post")
+  navigate("/create-event-post")
  })
 
   return (
     <div className="flex flex-1">
       <div className="home-container">
-        <div className="home-posts">
-        <div className="flex justify-between items-center w-full">
-            <h2 className="h3-bold md:h2-bold">Home Feed</h2>
+        <div >
+        <div className="flex justify-between items-center w-full mb-5">
+            <h2 className="h3-bold md:h2-bold">Events</h2>
             <Button className="shad-button_primary whitespace-nowrap" onClick={handelclick}>
-              Create Post
+              Create Event
             </Button>
           </div>
 
@@ -66,30 +70,15 @@ const Home = () => {
             <ul className="flex flex-col flex-1 gap-9 w-full ">
               {events?.map((post: Models.Document) => (
                 <li key={post.$id} className="flex justify-center w-full">
-                  <PostCard post={post} />
+                  <EventPostCard post={post} />
                 </li>
               ))}
             </ul>
           )}
         </div>
       </div>
-
-      <div className="home-creators">
-        <h3 className="h3-bold text-light-1">Top Creators</h3>
-        {isUserLoading && !creators ? (
-          <Loader />
-        ) : (
-          <ul className="grid 2xl:grid-cols-2 gap-6">
-            {creators?.documents.map((creator) => (
-              <li key={creator?.$id}>
-                <UserCard user={creator} />
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
     </div>
   );
 };
 
-export default Home;
+export default EventPost;

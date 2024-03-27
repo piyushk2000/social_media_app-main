@@ -31,17 +31,20 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useUserContext();
+  const UserId = user.id
   const form = useForm<z.infer<typeof ModuleValidation>>({
     resolver: zodResolver(ModuleValidation),
     defaultValues: {
       name: module ? module?.name : "",
       description: module ? module?.description : "",
       studylevel: module ? module?.studylevel : "",
+      studylevel2: module ? module?.studylevel : "",
+      studylevel3: module ? module?.studylevel : "",
       studymethod: module ? module?.studymethod : "",
     },
   });
 
-  console.log(ViewModule)
+  // console.log(ViewModule)
 
   // Query
   const { mutateAsync: createModule, isLoading: isLoadingCreate } = useCreateModule();
@@ -57,6 +60,8 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
         name: module.name,
         description: module.description,
         studylevel: module.studylevel,
+        studylevel2: module.studylevel2,
+        studylevel3: module.studylevel3,
         studymethod: module.studymethod,
       });
 
@@ -71,6 +76,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
     // ACTION = CREATE
     const newModule = await createModule({
       ...value,
+      userId: UserId,
     });
 
     if (!newModule) {
@@ -111,7 +117,33 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
           name="studylevel"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Study Level</FormLabel>
+              <FormLabel className="shad-form_label">Study Level OU</FormLabel>
+              <FormControl>
+                <Input type="text" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="studylevel2"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Study Level SCQF</FormLabel>
+              <FormControl>
+                <Input type="text" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="studylevel3"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Study Level FHEQ</FormLabel>
               <FormControl>
                 <Input type="text" className="shad-input" {...field} />
               </FormControl>

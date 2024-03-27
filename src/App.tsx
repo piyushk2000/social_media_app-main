@@ -31,6 +31,9 @@ import EditEvent from "./_root/pages/EditEvent";
 import EditModule from "./_root/pages/EditModule";
 import ViewEvent from "./_root/pages/viewEvent";
 import ViewModule from "./_root/pages/viewModule";
+import EventPost from "./_root/pages/AllEventPost";
+import CreateEventPost from "./_root/pages/CreateEventPost";
+import EditEventPost from "./_root/pages/EditEventPost";
 
 const App = () => {
   return (
@@ -46,17 +49,20 @@ const App = () => {
         {/* private routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
+          <Route path="/event-post" element={<EventPost />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/saved" element={<Saved />} />
           <Route path="/chat" element={<Chat />} />
           {/* <Route path="/calendar" element={<Calendar />} /> */}
           <Route path="/all-users" element={<AllUsers />} />
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/create-event-post" element={<CreateEventPost />} />
           <Route path="/create-event" element={<CreateEvent />} />
           <Route path="/all-events" element={<AllEvents />} />
           <Route path="/create-module" element={<CreateModule />} />
           <Route path="/all-modules" element={<AllModules />} />
           <Route path="/update-post/:id" element={<EditPost />} />
+          <Route path="/update-event-post/:id" element={<EditEventPost />} />
           <Route path="/update-event/:id" element={<EditEvent />} />
           <Route path="/view-event/:id" element={<ViewEvent />} />
           <Route path="/update-module/:id" element={<EditModule />} />

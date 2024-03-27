@@ -47,6 +47,14 @@ export const PostValidation = z.object({
   tags: z.string(),
 });
 
+export const EventPostValidation = z.object({
+  caption: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
+  file: z.custom<File[]>(),
+  type: z.string(),
+  location: z.string().min(1, { message: "This field is required" }).max(1000, { message: "Maximum 1000 characters." }),
+  datetime:z.date()
+});
+
 
 // ============================================================
 // EVENT
@@ -65,6 +73,8 @@ export const EventValidation = z.object({
 export const ModuleValidation = z.object({
   name: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
   description: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
-  studylevel: z.string().min(5, { message: "Minimum 5 characters." }).max(400, { message: "Maximum 400 caracters" }),
-  studymethod: z.string().min(5, { message: "Minimum 5 characters." }).max(400, { message: "Maximum 400 caracters" }),
+  studylevel: z.string().min(1, { message: "Minimum 5 characters." }).max(400, { message: "Maximum 400 caracters" }),
+  studylevel2: z.string().min(1, { message: "Minimum 1 characters." }).max(400, { message: "Maximum 400 caracters" }),
+  studylevel3: z.string().min(1, { message: "Minimum 1 characters." }).max(400, { message: "Maximum 400 caracters" }),
+  studymethod: z.string().min(5, { message: "Minimum 1 characters." }).max(400, { message: "Maximum 400 caracters" }),
 });

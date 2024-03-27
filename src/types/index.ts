@@ -53,7 +53,6 @@ export type INewModule = {
 
 export type IUpdateModule = {
   moduleId?: any;
-  userId: string;
   name?: string;
   description?: string;
   studylevel?: string;

@@ -24,26 +24,29 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
+import { useUserContext } from "@/context/AuthContext";
 
 const AllModules = () => {
-  const [moduleData, setModuleData] = useState([]);
+  const [userModules, setUserModules] = useState([]);
 
-  const { data: modules, isLoading, isError: isErrorCreators , refetch: moduleRefetch } = useGetModules();
+  const { data: modules, isLoading, isError: isErrorCreators, refetch: moduleRefetch } = useGetModules();
+  const { user } = useUserContext();
+  const currentUserId = user.id;
 
-  console.log(modules)
+  useEffect(() => {
+    if (modules && modules.documents) {
+      // Filter modules where userid == current userId
+      const filteredModules = modules.documents.filter(module => module.userId == currentUserId);
+      setUserModules(filteredModules);
+    }
+    console.log(userModules)
+    // console.log(modules.documents)
+    // console.log(currentUserId)
+  }, [modules, currentUserId]);
 
 
 
 
-
-
-  // useEffect(() => {
-  //   if (modules.documents) {
-  //     setModuleData(modules.documents)
-  //     console.log(moduleData)
-  //   }
-
-  // }, [modules])
 
   const { mutate: deleteModule } = useDeleteModule();
 
@@ -60,7 +63,7 @@ const AllModules = () => {
   const navigate = useNavigate();
   const handelclick = (() => {
     navigate("/create-module")
-    
+
   })
 
   return (
@@ -92,17 +95,39 @@ const AllModules = () => {
                 <TableHeader>
                   <TableRow>
                     <TableHead className="min-w-1 max-w-1">Module Name</TableHead>
-                    <TableHead>Study Level</TableHead>
+                    <TableHead className="text-center">Study Level</TableHead>
                     <TableHead>Study Method</TableHead>
                     <TableHead className="">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
 
                 <TableBody>
-                  {modules?.documents.map((module) => (
+                  {userModules?.map((module) => (
                     <TableRow key={module.$id}>
                       <TableCell className="min-w-1 max-w-1 font-medium">{module.name}</TableCell>
-                      <TableCell>{module.studylevel}</TableCell>
+                      <TableCell><Table>
+                        
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead className="min-w-1 max-w-1">OU</TableHead>
+                            <TableHead>SCQF</TableHead>
+                            <TableHead>FHEQ</TableHead>
+                            
+                          </TableRow>
+                        </TableHeader>
+
+                        <TableBody>
+                          {userModules?.map((module) => (
+                            <TableRow key={module.$id}>
+                              <TableCell className="min-w-1 max-w-1 font-medium">{module.studylevel}</TableCell>
+                              <TableCell>{module.studylevel2}</TableCell>
+                              <TableCell>{module.studylevel3}</TableCell>
+                              
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                      </TableCell>
                       <TableCell>{module.studymethod}</TableCell>
                       <TableCell className="text-right align flex mt-10">
                         <Link to={`/update-module/${module.$id}`}>

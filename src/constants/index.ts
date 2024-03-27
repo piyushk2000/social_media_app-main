@@ -41,7 +41,7 @@ export const sidebarLinks = [
   },
   {
     imgURL: "/assets/icons/wallpaper.svg",
-    route: "/all-events",
+    route: "/event-post",
     label: "All Events",
   },
 ];
