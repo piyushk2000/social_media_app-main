@@ -56,7 +56,6 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
     // ACTION = UPDATE
     if (module && action === "Update") {
       const updatedModule = await updateModule({
-        ...value,
         moduleId: module.$id,
         name: module.name,
         description: module.description,
@@ -65,6 +64,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
         studylevel3: module.studylevel3,
         studymethod: module.studymethod,
         status: module.status,
+        ...value,
       });
 
       if (!updatedModule) {
