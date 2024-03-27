@@ -30,7 +30,7 @@ export default function ClassesCalender() {
             </div>
             {data?.userType === "teacher" &&
             <Button onClick={handelclick} className="shad-button_primary whitespace-nowrap">
-              Create Event
+              Create class
             </Button>}
           </div>
 

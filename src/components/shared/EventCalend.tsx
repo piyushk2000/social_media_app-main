@@ -98,7 +98,7 @@ export default function EventCalender() {
           open={showEventDetails}>
           <DialogContent className="sm:max-w-[425px] bg-black text-[#FFF]">
             <DialogHeader>
-              <DialogTitle className="text-[#FFF]">Event Details</DialogTitle>
+              <DialogTitle className="text-[#FFF]">Class Details</DialogTitle>
               <DialogDescription></DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
@@ -113,14 +113,14 @@ export default function EventCalender() {
                 </p>
               </div>
               <div className="grid grid-cols-5 items-center gap-4">
-                <p className="col-span-2 text-[#FFF]">Event Description</p>
+                <p className="col-span-2 text-[#FFF]">Class Description</p>
                 <p className="col-span-3 text-[#FFF]">{selectedEvent?.description}</p>
               </div>
             </div>
             { data?.userType === "teacher" &&
             <DialogFooter>
-                <Button onClick={e=>navigate(`/update-event/${selectedEvent.id}`)}>Edit event</Button>
-                <Button onClick={e=>handleDelete(selectedEvent.id)}>Delete event</Button>
+                <Button onClick={e=>navigate(`/update-event/${selectedEvent.id}`)}>Edit class</Button>
+                <Button onClick={e=>handleDelete(selectedEvent.id)}>Delete class</Button>
               </DialogFooter>}
           </DialogContent>
         </Dialog>
