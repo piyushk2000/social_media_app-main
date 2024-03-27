@@ -20,33 +20,35 @@ import { useToast } from "@/components/ui/use-toast";
 import { useUserContext } from "@/context/AuthContext";
 import { FileUploader, Loader } from "@/components/shared";
 import { useCreateEvent, useUpdateEvent } from "@/lib/react-query/queries";
-import { Calendar } from "@/components/ui/calendar"
+import { Calendar } from "@/components/ui/calendar";
 import React from "react";
 // import { CalendarIcon } from "@radix-ui/react-icons"
-import { format } from "date-fns"
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { format } from "date-fns";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { ConfigProvider, DatePicker, Space, Typography, theme } from "antd";
+import dayjs from "dayjs";
+import en from "antd/es/date-picker/locale/en_US";
+import enUS from "antd/es/locale/en_US";
 
-
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { toast } from "@/components/ui/use-toast"
+} from "@/components/ui/popover";
+import { toast } from "@/components/ui/use-toast";
 
 const FormSchema = z.object({
   dob: z.date({
     required_error: "A date of birth is required.",
   }),
-})
-
+});
 
 type EventFormProps = {
   event?: Models.Document;
   action: "Create" | "Update";
-  ViewEvent?: false | true
+  ViewEvent?: false | true;
 };
 
 const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
@@ -63,10 +65,9 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
     },
   });
 
-  const [date, setDate] = React.useState<Date | undefined>(new Date())
   const form1 = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-  })
+  });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
@@ -76,13 +77,25 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
           <code className="text-black">{JSON.stringify(data, null, 2)}</code>
         </pre>
       ),
-    })
+    });
   }
 
+  const buddhistLocale: typeof en = {
+    ...en,
+    lang: {
+      ...en.lang,
+      fieldDateFormat: "YYYY-MM-DD",
+      fieldDateTimeFormat: "YYYY-MM-DD HH:mm:ss",
+      yearFormat: "YYYY",
+      cellYearFormat: "YYYY",
+    },
+  };
 
   // Query
-  const { mutateAsync: createEvent, isLoading: isLoadingCreate } = useCreateEvent();
-  const { mutateAsync: updateEvent, isLoading: isLoadingUpdate } = useUpdateEvent();
+  const { mutateAsync: createEvent, isLoading: isLoadingCreate } =
+    useCreateEvent();
+  const { mutateAsync: updateEvent, isLoading: isLoadingUpdate } =
+    useUpdateEvent();
 
   // Handler
   const handleSubmit = async (value: z.infer<typeof EventValidation>) => {
@@ -108,7 +121,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
     // ACTION = CREATE
     const newEvent = await createEvent({
       ...value,
-      eventsType: 'event'
+      eventsType: "event",
     });
 
     if (!newEvent) {
@@ -127,7 +140,6 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
         className="flex flex-col gap-9 w-full  max-w-5xl">
-
         <FormField
           control={form.control}
           name="name"
@@ -165,82 +177,56 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
           control={form.control}
           name="eventtime"
           disabled={ViewEvent}
-          render={({ field }) => (
+          render={({ field }) =>
+         { 
+          return (
             <FormItem className="flex flex-col">
-              <FormLabel>Date of Event</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                    disabled={ViewEvent}
-                      // variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarMonthIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    // selected={field.value}
-                    onSelect={(selectedDate) => {
-                      console.log(selectedDate);
-                      field.onChange(selectedDate);
-                    }}
-                    disabled={(date) =>
-                      // date > new Date() || date < new Date("1900-01-01")
-                      date < new Date("1900-01-01")
-                    }
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
+              <ConfigProvider
+                theme={{
+                  algorithm: theme.darkAlgorithm,
+                }}>
+                <DatePicker
+                  defaultValue={field.value? dayjs(field.value):null}
+                  showTime
+                  locale={buddhistLocale}
+                  onChange={(_,selectedDate) => {
+                    if(selectedDate && typeof selectedDate === "string")
+                    field.onChange(new Date(selectedDate));
+                  }}
+                />
+              </ConfigProvider>
+              <FormMessage className="shad-form_message" />
             </FormItem>
-          )}
+          )}}
         />
-        {ViewEvent ?
-          (
-            <div className="flex gap-4 items-center justify-end">
-              <Link to={`/update-event/${event.$id}`}>
-                <Button
-
-                  className="shad-button_primary whitespace-nowrap"
-                  disabled={isLoadingCreate || isLoadingUpdate}>
-                  {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-                  Edit Event
-                </Button>
-              </Link>
-            </div>
-          )
-          :
-          (
-            <div className="flex gap-4 items-center justify-end">
+        {ViewEvent ? (
+          <div className="flex gap-4 items-center justify-end">
+            <Link to={`/update-event/${event.$id}`}>
               <Button
-                type="button"
-                className="shad-button_dark_4"
-                onClick={() => navigate(-1)}>
-                Cancel
-              </Button>
-              <Button
-                type="submit"
                 className="shad-button_primary whitespace-nowrap"
                 disabled={isLoadingCreate || isLoadingUpdate}>
                 {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-                {action} Event
+                Edit Event
               </Button>
-            </div>
-          )}
-        
+            </Link>
+          </div>
+        ) : (
+          <div className="flex gap-4 items-center justify-end">
+            <Button
+              type="button"
+              className="shad-button_dark_4"
+              onClick={() => navigate(-1)}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="shad-button_primary whitespace-nowrap"
+              disabled={isLoadingCreate || isLoadingUpdate}>
+              {(isLoadingCreate || isLoadingUpdate) && <Loader />}
+              {action} Event
+            </Button>
+          </div>
+        )}
       </form>
     </Form>
   );

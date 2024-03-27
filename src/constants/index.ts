@@ -44,6 +44,11 @@ export const sidebarLinks = [
     route: "/event-post",
     label: "All Events",
   },
+  {
+    imgURL: "/assets/icons/calender.svg",
+    route:"/classes",
+    label:"Classes Calender"
+  }
 ];
 
 export const bottombarLinks = [

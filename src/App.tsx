@@ -34,6 +34,7 @@ import ViewModule from "./_root/pages/viewModule";
 import EventPost from "./_root/pages/AllEventPost";
 import CreateEventPost from "./_root/pages/CreateEventPost";
 import EditEventPost from "./_root/pages/EditEventPost";
+import ClassesCalender from "./_root/pages/ClassesCalender";
 
 const App = () => {
   return (
@@ -70,6 +71,7 @@ const App = () => {
           <Route path="/posts/:id" element={<PostDetails />} />
           <Route path="/profile/:id/*" element={<Profile />} />
           <Route path="/update-profile/:id" element={<UpdateProfile />} />
+          <Route path="/classes" element={<ClassesCalender />} />
         </Route>
       </Routes>
 

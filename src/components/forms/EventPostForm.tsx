@@ -188,7 +188,6 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
                     mode="single"
                     // selected={field.value}
                     onSelect={(selectedDate) => {
-                      console.log(selectedDate);
                       field.onChange(selectedDate);
                     }}
                     disabled={(date) =>
@@ -220,7 +219,7 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
             className="shad-button_primary whitespace-nowrap"
             disabled={isLoadingCreate || isLoadingUpdate}>
             {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-            {action} Post
+            {action} Event
           </Button>
         </div>
       </form>
