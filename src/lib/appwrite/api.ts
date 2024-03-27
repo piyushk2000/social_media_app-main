@@ -557,9 +557,12 @@ export async function updateModule(module: IUpdateModule) {
         name: module.name,
         description: module.description,
         studylevel: module.studylevel,
-        studymethod: module.studymethod
+        studymethod: module.studymethod,
+        status: module.status
       }
     );
+
+    console.log(module.status)
 
     // Failed to update
     if (!updatedEvent) {

@@ -7,6 +7,7 @@ import { useGetRecentPosts, useGetUsers } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui";
 import { useEffect, useState } from "react";
 import EventPostCard from "@/components/shared/EventPostCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const EventPost = () => {
   // const { toast } = useToast();
@@ -29,11 +30,37 @@ const EventPost = () => {
   // Assuming postData is the state variable containing the data
   // const [postData, setPostData] = useState({ total: 0, documents: [] });
 
+
+
+
   useEffect(() => {
     const filteredEvents = posts?.documents.filter(post => post.type == 'event');
     setEvents(filteredEvents);
-    console.log(events)
+    console.log('events',events)
   }, [posts]);
+
+  const [pastEvents, setPastEvents] = useState([]);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  
+  useEffect(() => {
+    if (!isPostLoading && events) {
+      const currentDate = new Date();
+      const past = [];
+      const upcoming = [];
+      events.forEach((event) => {
+        const eventDate = new Date(event.datetime);
+        if (eventDate < currentDate) {
+          past.push(event);
+        } else {
+          upcoming.push(event);
+        }
+      });
+      setPastEvents(past);
+      setUpcomingEvents(upcoming);
+    }
+  }, [isPostLoading, events]);
+
+
   // console.log(posts)
 
   if (isErrorPosts || isErrorCreators) {
@@ -49,31 +76,64 @@ const EventPost = () => {
     );
   }
   const navigate = useNavigate();
- const handelclick = (()=>{
-  navigate("/create-event-post")
- })
+  const handelclick = (() => {
+    navigate("/create-event-post")
+  })
 
   return (
     <div className="flex flex-1">
       <div className="home-container">
         <div >
-        <div className="flex justify-between items-center w-full mb-5">
+          <div className="flex justify-between items-center w-full mb-5">
             <h2 className="h3-bold md:h2-bold">Events</h2>
             <Button className="shad-button_primary whitespace-nowrap" onClick={handelclick}>
               Create Event
             </Button>
           </div>
 
-          {isPostLoading && !posts ? (
+          {isPostLoading && !events ? (
             <Loader />
           ) : (
-            <ul className="flex flex-col flex-1 gap-9 w-full ">
-              {events?.map((post: Models.Document) => (
-                <li key={post.$id} className="flex justify-center w-full">
-                  <EventPostCard post={post} />
-                </li>
-              ))}
-            </ul>
+            <>
+              <Tabs defaultValue="upcoming" className="w-full">
+                <TabsList className="mt-2 grid w-full grid-cols-2">
+                  <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
+                  <TabsTrigger value="past">Past Events</TabsTrigger>
+                </TabsList>
+                <TabsContent value="upcoming">
+                  <>
+                    <ul className="flex flex-col flex-1 gap-9 w-full ">
+                      {upcomingEvents?.map((post: Models.Document) => (
+                        <li key={post.$id} className="flex justify-center w-full">
+                          <EventPostCard post={post} />
+                        </li>
+                      ))}
+                    </ul>
+
+                  </>
+                </TabsContent>
+                <TabsContent value="past">
+                  <>
+                    <ul className="flex flex-col flex-1 gap-9 w-full ">
+                      {pastEvents?.map((post: Models.Document) => (
+                        <li key={post.$id} className="flex justify-center w-full">
+                          <EventPostCard post={post} />
+                        </li>
+                      ))}
+                    </ul>
+
+
+                  </>
+                </TabsContent>
+
+              </Tabs>
+
+
+
+
+
+              
+            </>
           )}
         </div>
       </div>

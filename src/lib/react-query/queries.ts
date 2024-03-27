@@ -128,7 +128,7 @@ export const useUpdateModule = () => {
     mutationFn: (module: IUpdateModule) => updateModule(module),
     onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_POST_BY_ID, data?.$id],
+        queryKey: [QUERY_KEYS.GET_MODULE_BY_ID, data?.$id],
       });
     },
   });

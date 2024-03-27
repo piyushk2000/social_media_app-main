@@ -41,6 +41,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
       studylevel2: module ? module?.studylevel : "",
       studylevel3: module ? module?.studylevel : "",
       studymethod: module ? module?.studymethod : "",
+      status: module ? module?.status : "",
     },
   });
 
@@ -63,6 +64,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
         studylevel2: module.studylevel2,
         studylevel3: module.studylevel3,
         studymethod: module.studymethod,
+        status: module.status,
       });
 
       if (!updatedModule) {
@@ -95,8 +97,10 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
         className="flex flex-col gap-9 w-full  max-w-5xl">
+        
 
         <FormField
+        disabled={ViewModule}
           control={form.control}
           name="name"
           render={({ field }) => (
@@ -113,6 +117,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
 
 
         <FormField
+        disabled={ViewModule}
           control={form.control}
           name="studylevel"
           render={({ field }) => (
@@ -125,7 +130,9 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
             </FormItem>
           )}
         />
+
         <FormField
+        disabled={ViewModule}
           control={form.control}
           name="studylevel2"
           render={({ field }) => (
@@ -140,6 +147,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
         />
         <FormField
           control={form.control}
+          disabled={ViewModule}
           name="studylevel3"
           render={({ field }) => (
             <FormItem>
@@ -153,6 +161,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
         />
         <FormField
           control={form.control}
+          disabled={ViewModule}
           name="studymethod"
           render={({ field }) => (
             <FormItem>
@@ -164,8 +173,24 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
+          disabled={ViewModule}
+          name="status"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">progress</FormLabel>
+              <FormControl>
+                <Input type="number" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          disabled={ViewModule}
           name="description"
           render={({ field }) => (
             <FormItem>
@@ -180,6 +205,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
             </FormItem>
           )}
         />
+        
 
         {ViewModule ?
           (
@@ -209,7 +235,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
                 className="shad-button_primary whitespace-nowrap"
                 disabled={isLoadingCreate || isLoadingUpdate}>
                 {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-                {action} Event
+                {action} Module
               </Button>
             </div>
           )}

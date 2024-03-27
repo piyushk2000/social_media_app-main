@@ -25,6 +25,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import { useUserContext } from "@/context/AuthContext";
+import { Progress } from "@/components/ui/progress"
+
 
 const AllModules = () => {
   const [userModules, setUserModules] = useState([]);
@@ -97,6 +99,7 @@ const AllModules = () => {
                     <TableHead className="min-w-1 max-w-1">Module Name</TableHead>
                     <TableHead className="text-center">Study Level</TableHead>
                     <TableHead>Study Method</TableHead>
+                    <TableHead>Progress</TableHead>
                     <TableHead className="">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -129,6 +132,7 @@ const AllModules = () => {
                       </Table>
                       </TableCell>
                       <TableCell>{module.studymethod}</TableCell>
+                      <TableCell><Progress value={module.status} />{module.status} </TableCell>
                       <TableCell className="text-right align flex mt-10">
                         <Link to={`/update-module/${module.$id}`}>
                           <EditIcon />

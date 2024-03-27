@@ -47,7 +47,7 @@ export type INewModule = {
   studylevel?: string;
   studylevel2?: string;
   studylevel3?: string;
-  status?: string;
+  status?: number;
   studymethod?: string;
 };
 
@@ -58,7 +58,7 @@ export type IUpdateModule = {
   studylevel?: string;
   studylevel2?: string;
   studylevel3?: string;
-  status?: string;
+  status?: any;
   studymethod?: string;
 };
 

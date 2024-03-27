@@ -99,7 +99,7 @@ const EventPostCard = ({ post }: PostCardProps) => {
           <Label className="mt-5">Discription</Label>
           <p>{post?.location}</p>
           <Label className="mt-5">Date</Label>
-          <p>{post?.datetime}</p>
+          <p>{new Date(post?.datetime).toLocaleDateString()}</p>
           <ul className="flex gap-1 mt-2">
             {post?.tags.map((tag: string, index: string) => (
               <li
