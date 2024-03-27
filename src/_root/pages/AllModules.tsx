@@ -120,14 +120,14 @@ const AllModules = () => {
                         </TableHeader>
 
                         <TableBody>
-                          {userModules?.map((module) => (
+                          {/* {userModules?.map((module) => ( */}
                             <TableRow key={module.$id}>
                               <TableCell className="min-w-1 max-w-1 font-medium">{module.studylevel}</TableCell>
                               <TableCell>{module.studylevel2}</TableCell>
                               <TableCell>{module.studylevel3}</TableCell>
                               
                             </TableRow>
-                          ))}
+                          {/* ))} */}
                         </TableBody>
                       </Table>
                       </TableCell>
