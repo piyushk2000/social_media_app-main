@@ -23,6 +23,8 @@ const AllUsers = () => {
     if (creators) {
       const results = creators.documents.filter(user =>
         user.name.toLowerCase().includes(search) ||
+        user.username.toLowerCase().includes(search) ||
+        user.email.toLowerCase().includes(search) ||
         user?.bio?.toLowerCase().includes(search) 
       );
       setFilteredUsers(results);
