@@ -63,7 +63,7 @@ const EventPostCard = ({ post }: PostCardProps) => {
         </div>
 
         <div className="w-full">
-        <label className="mt-5 text-primary-500 text-lg">-- Author --</label>
+        <label className="mt-5 text-primary-500 text-lg">-- Hosted By --</label>
         <hr className="border w-full border-dark-4/80 mb-4" />
         <div className="flex-between w-full">
           
