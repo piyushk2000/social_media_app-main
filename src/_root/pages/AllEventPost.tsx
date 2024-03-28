@@ -84,17 +84,18 @@ const EventPost = () => {
     <div className="flex flex-1">
       <div className="home-container">
         <div >
-          <div className="flex justify-between items-center w-full mb-5">
-            <h2 className="h3-bold md:h2-bold">Events</h2>
-            <Button className="shad-button_primary whitespace-nowrap" onClick={handelclick}>
-              Create Event
-            </Button>
-          </div>
+          
 
           {isPostLoading && !events ? (
             <Loader />
           ) : (
             <>
+            <div className="flex justify-between items-center w-full mb-5">
+            <h2 className="h3-bold md:h2-bold">Events</h2>
+            <Button className="shad-button_primary whitespace-nowrap" onClick={handelclick}>
+              Create Event
+            </Button>
+          </div>
               <Tabs defaultValue="upcoming" className="w-full">
                 <TabsList className="mt-2 grid w-full grid-cols-2">
                   <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>

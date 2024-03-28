@@ -39,7 +39,34 @@ const EventPostCard = ({ post }: PostCardProps) => {
       />
 
       <div className="post_details-info">
+        
+
+
+        <div className="flex flex-col flex-1 w-full small-medium lg:base-regular">
+          <Label className="mt-5 text-primary-500 text-lg">Event Name</Label>
+          <p>{post?.caption}</p>
+          <Label className="mt-5 text-primary-500 text-lg">Event Discription</Label>
+          <p>{post?.location}</p>
+          <Label className="mt-5 text-primary-500 text-lg">Date</Label>
+          <p>{new Date(post?.datetime).toLocaleDateString()}</p>
+          <Label className="mt-5 text-primary-500 text-lg">Time</Label>
+          <p>{new Date(post?.datetime).toLocaleTimeString('en-US', { hour12: true })}</p>
+          <ul className="flex gap-1 mt-2">
+            {post?.tags.map((tag: string, index: string) => (
+              <li
+                key={`${tag}${index}`}
+                className="text-light-3 small-regular">
+                #{tag}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="w-full">
+        <label className="mt-5 text-primary-500 text-lg">-- Hosted By --</label>
+        <hr className="border w-full border-dark-4/80 mb-4" />
         <div className="flex-between w-full">
+          
           <Link
             to={`/profile/${post?.creator.$id}`}
             className="flex items-center gap-3">
@@ -56,11 +83,7 @@ const EventPostCard = ({ post }: PostCardProps) => {
                 {post?.creator.name}
               </p>
               <div className="flex-center gap-2 text-light-3">
-                <p className="subtle-semibold lg:small-regular ">
-                  {multiFormatDateString(post?.$createdAt)}
-                </p>
-                •
-                
+
               </div>
             </div>
           </Link>
@@ -92,27 +115,7 @@ const EventPostCard = ({ post }: PostCardProps) => {
           </div>
         </div>
 
-        <hr className="border w-full border-dark-4/80" />
-
-        <div className="flex flex-col flex-1 w-full small-medium lg:base-regular">
-          <p>{post?.caption}</p>
-          <Label className="mt-5">Discription</Label>
-          <p>{post?.location}</p>
-          <Label className="mt-5">Date</Label>
-          <p>{new Date(post?.datetime).toLocaleDateString()}</p>
-          <ul className="flex gap-1 mt-2">
-            {post?.tags.map((tag: string, index: string) => (
-              <li
-                key={`${tag}${index}`}
-                className="text-light-3 small-regular">
-                #{tag}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="w-full">
-          <EventStats post={post} userId={user.id} />
+          {/* <EventStats post={post} userId={user.id} /> */}
         </div>
       </div>
     </div>

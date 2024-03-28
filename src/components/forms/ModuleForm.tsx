@@ -20,6 +20,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { useUserContext } from "@/context/AuthContext";
 import { FileUploader, Loader } from "@/components/shared";
 import { useCreateModule, useUpdateModule } from "@/lib/react-query/queries";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { OptionType } from "../ui/multi-select";
 
 type moduleFormProps = {
   module?: Models.Document;
@@ -45,11 +53,31 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
     },
   });
 
+  const subjects: OptionType[] = [
+    { label: 'Mathematics', value: 'mathematics' },
+    { label: 'English Language', value: 'english_language' },
+    { label: 'Sciences', value: 'sciences' },
+    { label: 'History', value: 'history' },
+    { label: 'Geography', value: 'geography' },
+    { label: 'Literature', value: 'literature' },
+    { label: 'Foreign Languages', value: 'foreign_languages' },
+    { label: 'Computer Science', value: 'computer_science' },
+    { label: 'Art and Design', value: 'art_and_design' },
+    { label: 'Music', value: 'music' },
+    { label: 'Physical Education', value: 'physical_education' },
+    { label: 'Religious Studies or Ethics', value: 'religious_studies_or_ethics' },
+    { label: 'Home Economics', value: 'home_economics' },
+    { label: 'Psychology', value: 'psychology' },
+    { label: 'Technology', value: 'technology' }
+  ];
+
   // console.log(ViewModule)
 
   // Query
   const { mutateAsync: createModule, isLoading: isLoadingCreate } = useCreateModule();
   const { mutateAsync: updateModule, isLoading: isLoadingUpdate } = useUpdateModule();
+
+
 
   // Handler
   const handleSubmit = async (value: z.infer<typeof ModuleValidation>) => {
@@ -97,19 +125,32 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
       <form
         onSubmit={form.handleSubmit(handleSubmit)}
         className="flex flex-col gap-9 w-full  max-w-5xl">
-        
+
 
         <FormField
-        disabled={ViewModule}
+          disabled={ViewModule}
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="shad-form_label">Name</FormLabel>
-              <FormControl>
-                <Input type="text" className="shad-input" {...field} />
-              </FormControl>
-              <FormMessage className="shad-form_message" />
+              <FormLabel>Subject</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value} disabled={ViewModule}>
+                <FormControl>
+                  <SelectTrigger disabled={ViewModule}
+                    className="shad-input">
+                    <SelectValue placeholder="Select a Subject" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="bg-dark-4 border-none placeholder:text-light-4 focus-visible:ring-1 focus-visible:ring-offset-1 ring-offset-light-3 text-light-1">
+                  {subjects.map((subject) => (
+                    <SelectItem key={subject.value} value={subject.value}>
+                      {subject.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -117,7 +158,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
 
 
         <FormField
-        disabled={ViewModule}
+          disabled={ViewModule}
           control={form.control}
           name="studylevel"
           render={({ field }) => (
@@ -132,7 +173,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
         />
 
         <FormField
-        disabled={ViewModule}
+          disabled={ViewModule}
           control={form.control}
           name="studylevel2"
           render={({ field }) => (
@@ -182,7 +223,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
             <FormItem>
               <FormLabel className="shad-form_label">progress</FormLabel>
               <FormControl>
-                <Input type="number" className="shad-input" {...field} />
+                <Input type="number" className="shad-input" {...field} onChange={(e) => field.onChange(Number(e.target.value))} />
               </FormControl>
               <FormMessage className="shad-form_message" />
             </FormItem>
@@ -205,7 +246,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
             </FormItem>
           )}
         />
-        
+
 
         {ViewModule ?
           (
@@ -216,7 +257,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
                   className="shad-button_primary whitespace-nowrap"
                   disabled={isLoadingCreate || isLoadingUpdate}>
                   {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-                  Edit Event
+                  Edit Module
                 </Button>
               </Link>
             </div>

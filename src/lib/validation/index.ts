@@ -52,7 +52,7 @@ export const EventPostValidation = z.object({
   file: z.custom<File[]>(),
   type: z.string(),
   location: z.string().min(1, { message: "This field is required" }).max(1000, { message: "Maximum 1000 characters." }),
-  datetime:z.date()
+  datetime:z.any()
 });
 
 
@@ -77,5 +77,5 @@ export const ModuleValidation = z.object({
   studylevel2: z.string().min(1, { message: "Minimum 1 characters." }).max(400, { message: "Maximum 400 caracters" }),
   studylevel3: z.string().min(1, { message: "Minimum 1 characters." }).max(400, { message: "Maximum 400 caracters" }),
   studymethod: z.string().min(5, { message: "Minimum 5 characters." }).max(400, { message: "Maximum 400 caracters" }),
-  status: z.any(),
+  status: z.number().int().min(0).max(100),
 });
