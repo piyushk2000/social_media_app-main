@@ -134,9 +134,10 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
           render={({ field }) => (
             <FormItem>
               <FormLabel>Subject</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} defaultValue={field.value} disabled={ViewModule}>
                 <FormControl>
-                  <SelectTrigger className="shad-input">
+                  <SelectTrigger disabled={ViewModule}
+                    className="shad-input">
                     <SelectValue placeholder="Select a Subject" />
                   </SelectTrigger>
                 </FormControl>
@@ -256,7 +257,7 @@ const ModuleForm = ({ module, action, ViewModule = false }: moduleFormProps) => 
                   className="shad-button_primary whitespace-nowrap"
                   disabled={isLoadingCreate || isLoadingUpdate}>
                   {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-                  Edit Event
+                  Edit Module
                 </Button>
               </Link>
             </div>
