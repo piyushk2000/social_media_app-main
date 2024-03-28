@@ -83,6 +83,8 @@ export type IUser = {
   bio: string;
   userType: string;
   $id?: string;
+  posts?:any[];
+  imageId?:any;
 };
 
 export type INewUser = {

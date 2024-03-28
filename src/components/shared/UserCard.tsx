@@ -5,7 +5,7 @@ import { Button } from "../ui/button";
 
 type UserCardProps = {
   user: Models.Document;
-  newMessages:{
+  newMessages?:{
     [key:string]:Number
   }
 };

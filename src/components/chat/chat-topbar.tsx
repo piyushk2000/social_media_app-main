@@ -1,9 +1,5 @@
-import React from 'react'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Info, Phone, Video } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { buttonVariants } from '../ui/button';
-import { UserData } from './chat-layout';
 import { IUser } from '@/types';
 
 interface ChatTopbarProps {
