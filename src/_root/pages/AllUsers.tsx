@@ -36,7 +36,7 @@ const AllUsers = () => {
   return (
     <div className="common-container">
       <div className="user-container">
-        <h2 className="h3-bold md:h2-bold text-left w-full">All Users</h2>
+        <h2 className="h3-bold md:h2-bold text-left w-full h-8">All Users</h2>
         <input
           type="text"
           placeholder="Search..."
@@ -51,7 +51,7 @@ const AllUsers = () => {
         ) : (
           <>
             <Tabs defaultValue="connections" className="w-full">
-              <TabsList className="mt-2 grid w-full grid-cols-3">
+              <TabsList className="-mt-4 grid w-full grid-cols-3">
                 <TabsTrigger value="connections">All Users</TabsTrigger>
                 <TabsTrigger value="Student">Student List</TabsTrigger>
                 <TabsTrigger value="Teacher">Teacher List</TabsTrigger>

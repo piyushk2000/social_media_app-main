@@ -45,7 +45,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                     role="combobox"
                     size='full'
                     aria-expanded={open}
-                    className={`w-full justify-between }`}
+                    className={`w-full justify-between bg-dark-4`}
                     onClick={() => setOpen(!open)}
                 >
                     <div className="flex gap-1 flex-wrap">
@@ -58,7 +58,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                             >
                                 {item}
                                 <button
-                                    className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                    className="ml-1  ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") {
                                             handleUnselect(item);
@@ -86,7 +86,7 @@ function MultiSelect({ options, selected, onChange, className, ...props }: Multi
                             {options.map((option) => (
                                 <>
                                     <Button
-                                        className='relative pl-8'
+                                        className='relative pl-8 '
                                         variant={'ghost'}
                                         key={option.value}
                                         value={option.value}
