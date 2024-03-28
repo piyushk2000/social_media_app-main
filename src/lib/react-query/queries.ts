@@ -35,8 +35,11 @@ import {
   getModuletById,
   deleteEvent,
   deleteModule,
+  sendMessage,
+  getMessages,
+  getNewChats,
 } from "@/lib/appwrite/api";
-import { INewPost, INewUser, IUpdatePost, IUpdateUser, IUpdateEvent, IUpdateModule } from "@/types";
+import { INewPost, INewUser, IUpdatePost, IUpdateUser, IUpdateEvent, IUpdateModule, Imessage } from "@/types";
 import { INewEvent, INewModule } from "@/types/index";
 
 // ============================================================
@@ -375,3 +378,25 @@ export const useUpdateUser = () => {
     },
   });
 };
+
+export const useSendMessages = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (message: Imessage) => sendMessage(message),
+  });
+}
+
+export const useGetUserMessages = (senderId:string,receiverId:string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CHATS, senderId,receiverId],
+    queryFn: () => getMessages(senderId,receiverId),
+    // enabled: !!userId,
+  });
+}
+
+export const useGetUserNewChats = (userId:string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USER_NEW_CHATS,userId],
+    queryFn: ()=> getNewChats(userId),
+  });
+}

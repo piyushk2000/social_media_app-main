@@ -1,12 +1,16 @@
 import { useToast } from "@/components/ui/use-toast";
 import { Loader, UserCard } from "@/components/shared";
-import { useGetUsers } from "@/lib/react-query/queries";
+import { useGetUserNewChats, useGetUsers } from "@/lib/react-query/queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useUserContext } from "@/context/AuthContext";
+import { useEffect } from "react";
 
 const AllUsers = () => {
   const { toast } = useToast();
+  const { user, setUser, setIsAuthenticated} = useUserContext();
 
   const { data: creators, isLoading, isError: isErrorCreators } = useGetUsers();
+  const { data:newMessages ,refetch:getUserNewChats} = useGetUserNewChats(user.id)
 
   if (isErrorCreators) {
     toast({ title: "Something went wrong." });
@@ -14,6 +18,10 @@ const AllUsers = () => {
     return;
   }
 
+  useEffect(() => {
+    if(user.id)
+    getUserNewChats();
+  }, [user]);
   // Separate the users based on userType
   const students = creators?.documents.filter((creator) => creator.userType === "student");
   const teachers = creators?.documents.filter((creator) => creator.userType === "teacher");
@@ -36,7 +44,7 @@ const AllUsers = () => {
                 <ul className="user-grid">
                   {creators?.documents.map((creator) => (
                     <li key={creator?.$id} className="flex-1 min-w-[200px] w-full  ">
-                      <UserCard user={creator} />
+                      <UserCard user={creator} newMessages={newMessages}/>
                     </li>
                   ))}
                 </ul>
@@ -45,7 +53,7 @@ const AllUsers = () => {
                 <ul className="user-grid">
                   {students?.map((student) => (
                     <li key={student?.$id} className="flex-1 min-w-[200px] w-full  ">
-                      <UserCard user={student} />
+                      <UserCard user={student} newMessages={newMessages}/>
                     </li>
                   ))}
                 </ul>
@@ -54,7 +62,7 @@ const AllUsers = () => {
                 <ul className="user-grid">
                   {teachers?.map((teacher) => (
                     <li key={teacher?.$id} className="flex-1 min-w-[200px] w-full  ">
-                      <UserCard user={teacher} />
+                      <UserCard user={teacher} newMessages={newMessages}/>
                     </li>
                   ))}
                 </ul>

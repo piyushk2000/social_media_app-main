@@ -35,6 +35,7 @@ import EventPost from "./_root/pages/AllEventPost";
 import CreateEventPost from "./_root/pages/CreateEventPost";
 import EditEventPost from "./_root/pages/EditEventPost";
 import ClassesCalender from "./_root/pages/ClassesCalender";
+import Chats from "./_root/pages/Chats";
 
 const App = () => {
   return (
@@ -72,6 +73,7 @@ const App = () => {
           <Route path="/profile/:id/*" element={<Profile />} />
           <Route path="/update-profile/:id" element={<UpdateProfile />} />
           <Route path="/classes" element={<ClassesCalender />} />
+          <Route path="/chats/:id" element={<Chats />} />
         </Route>
       </Routes>
 

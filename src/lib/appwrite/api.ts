@@ -1,7 +1,16 @@
 import { ID, Query } from "appwrite";
 
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { IUpdatePost, INewPost, INewUser, IUpdateUser, INewEvent, INewModule } from "@/types";
+import {
+  IUpdatePost,
+  INewPost,
+  INewUser,
+  IUpdateUser,
+  INewEvent,
+  INewModule,
+  IUser,
+  Imessage,
+} from "@/types";
 import { IUpdateEvent, IUpdateModule } from "@/types/index";
 
 // ============================================================
@@ -64,7 +73,10 @@ export async function saveUserToDB(user: {
 }
 
 // ============================== SIGN IN
-export async function signInAccount(user: { email?: string; password?: string }) {
+export async function signInAccount(user: {
+  email?: string;
+  password?: string;
+}) {
   try {
     const session = await account.createEmailSession(user.email, user.password);
 
@@ -279,7 +291,7 @@ export async function updatePost(post: IUpdatePost) {
   try {
     let image = {
       imageUrl: post.imageUrl,
-      imageId: post.imageId
+      imageId: post.imageId,
     };
 
     if (hasFileToUpdate) {
@@ -359,7 +371,6 @@ export async function deletePost(postId?: string, imageId?: string) {
   }
 }
 
-
 // ============================== CREATE EVENT
 export async function createEvent(event: INewEvent) {
   try {
@@ -372,7 +383,7 @@ export async function createEvent(event: INewEvent) {
         name: event.name,
         description: event.description,
         eventtime: event.eventtime,
-        eventsType: event.eventsType
+        eventsType: event.eventsType,
       }
     );
 
@@ -439,7 +450,7 @@ export async function updateEvent(event: IUpdateEvent) {
         name: event.name,
         description: event.description,
         eventtime: event.eventtime,
-        eventsType: event.eventsType
+        eventsType: event.eventsType,
       }
     );
 
@@ -448,7 +459,7 @@ export async function updateEvent(event: IUpdateEvent) {
       // If no new file uploaded, just throw error
       throw Error;
     }
-    console.log('event update')
+    console.log("event update");
     return updatedEvent;
   } catch (error) {
     console.log(error);
@@ -476,7 +487,6 @@ export async function deleteEvent(eventId?: string) {
 // ============================== CREATE MODULE
 export async function createModule(module: INewModule) {
   try {
-
     const newModule = await databases.createDocument(
       appwriteConfig.databaseId,
       appwriteConfig.moduleCollectionId,
@@ -489,7 +499,7 @@ export async function createModule(module: INewModule) {
         studylevel2: module.studylevel2,
         studylevel3: module.studylevel3,
         status: module.status,
-        studymethod: module.studymethod
+        studymethod: module.studymethod,
       }
     );
 
@@ -502,7 +512,6 @@ export async function createModule(module: INewModule) {
     console.log(error);
   }
 }
-
 
 // ============================== GET MODULE BY ID
 export async function getModules(limit?: number) {
@@ -539,7 +548,6 @@ export async function getModuletById(moduleId?: string) {
 
     if (!module) throw Error;
     return module;
-
   } catch (error) {
     console.log(error);
   }
@@ -558,18 +566,18 @@ export async function updateModule(module: IUpdateModule) {
         description: module.description,
         studylevel: module.studylevel,
         studymethod: module.studymethod,
-        status: module.status
+        status: module.status,
       }
     );
 
-    console.log(module.status)
+    console.log(module.status);
 
     // Failed to update
     if (!updatedEvent) {
       // If no new file uploaded, just throw error
       throw Error;
     }
-    console.log('module update')
+    console.log("module update");
     return updatedEvent;
   } catch (error) {
     console.log(error);
@@ -593,7 +601,6 @@ export async function deleteModule(moduleId?: string) {
     console.log(error);
   }
 }
-
 
 // ============================== GET USER'S Module
 export async function getUserModules(userId?: string) {
@@ -643,7 +650,7 @@ export async function savePost(userId: string, postId: string) {
       ID.unique(),
       {
         user: userId,
-        post: postId
+        post: postId,
       }
     );
 
@@ -735,7 +742,7 @@ export async function getUsers(limit?: number) {
 }
 
 // ============================== GET USER BY ID
-export async function getUserById(userId: string) {
+export async function getUserById(userId: string): Promise<IUser | null> {
   try {
     const user = await databases.getDocument(
       appwriteConfig.databaseId,
@@ -743,11 +750,24 @@ export async function getUserById(userId: string) {
       userId
     );
 
-    if (!user) throw Error;
+    if (!user) return null;
 
-    return user;
+    // Map the retrieved data to match the IUser interface
+    const mappedUser: IUser = {
+      id: user.$id,
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      imageUrl: user.imageUrl,
+      bio: user.bio,
+      userType: user.userType,
+      ...user,
+    };
+
+    return mappedUser;
   } catch (error) {
     console.log(error);
+    return null;
   }
 }
 
@@ -804,6 +824,135 @@ export async function updateUser(user: IUpdateUser) {
     }
 
     return updatedUser;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+// ============================== Send Message
+
+export async function sendMessage(message: Imessage) {
+  try {
+    const newMessage = await databases.createDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.chatMessagesCollectionId,
+      ID.unique(),
+      {
+        receiver: message.receiver,
+        sender: message.sender,
+        message: message.message,
+      }
+    );
+
+    if (!newMessage) throw Error;
+
+    const allChats = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.chatsCollectionId,
+      []
+    );
+    const currentUserChat = allChats.documents.filter(
+      (chat) =>
+        chat.participants.includes(message.sender) &&
+        chat.participants.includes(message.receiver)
+    );
+
+    if (currentUserChat && currentUserChat.length > 0) {
+      currentUserChat[0].messages.push(newMessage.$id);
+      await databases.updateDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.chatsCollectionId,
+        currentUserChat[0].$id,
+        {
+          messages: currentUserChat[0].messages,
+        }
+      );
+    } else {
+      const newChat = await databases.createDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.chatsCollectionId,
+        ID.unique(),
+        {
+          participants: [message.sender, message.receiver],
+          messages: [newMessage.$id],
+        }
+      );
+    }
+    return newMessage;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getMessages(sender: string, receiver: string) {
+  try {
+    const allChats = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.chatsCollectionId,
+      []
+    );
+    const currentUserChat = allChats.documents.filter(
+      (chat) =>
+        chat.participants.includes(sender) &&
+        chat.participants.includes(receiver)
+    );
+
+    if (currentUserChat.length > 0) {
+      const messages = currentUserChat[0].messages;
+      const receiverMessages = messages.filter(
+        (message) => message.receiver === receiver
+      );
+      const updateAsRead = await Promise.all(
+        receiverMessages.map(async (message) => {
+          await databases.updateDocument(
+            appwriteConfig.databaseId,
+            appwriteConfig.chatMessagesCollectionId,
+            message.$id,
+            {
+              read: true,
+            }
+          );
+        })
+      );
+      return currentUserChat[0];
+    } else return null;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getNewChats(userId: string) {
+  try {
+    const allChats = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.chatsCollectionId,
+      []
+    );
+
+    const currentUserChats = allChats.documents.filter((chat) => {
+      return (
+        chat.participants.includes(userId) &&
+        chat.messages.length > 0 &&
+        chat.messages[chat.messages.length - 1].receiver === userId &&
+        chat.messages[chat.messages.length - 1].read === false
+      );
+    });
+
+    const unreadMessagesBySender = {};
+
+    currentUserChats.forEach((chat) => {
+      chat.messages.forEach((message) => {
+        if (message.receiver === userId && !message.read) {
+          const senderId = message.sender;
+          if (!unreadMessagesBySender[senderId]) {
+            unreadMessagesBySender[senderId] = 0;
+          }
+          unreadMessagesBySender[senderId]++;
+        }
+      });
+    });
+
+    return unreadMessagesBySender;
   } catch (error) {
     console.log(error);
   }

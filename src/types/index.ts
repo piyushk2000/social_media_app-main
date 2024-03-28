@@ -82,6 +82,7 @@ export type IUser = {
   imageUrl: string;
   bio: string;
   userType: string;
+  $id?: string;
 };
 
 export type INewUser = {
@@ -92,3 +93,10 @@ export type INewUser = {
   userType?: string;
   bio?: string;
 };
+
+export type Imessage={
+  sender?: string;
+  receiver?: string;
+  message: string;
+  id?: string;
+}
