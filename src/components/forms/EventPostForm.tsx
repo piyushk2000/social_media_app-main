@@ -3,7 +3,6 @@ import { Models } from "appwrite";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import {
   Form,
   FormControl,
@@ -25,6 +24,11 @@ import React from "react";
 // import { CalendarIcon } from "@radix-ui/react-icons"
 import { format } from "date-fns"
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { ConfigProvider, DatePicker, Space, Typography, theme } from "antd";
+import en from "antd/es/date-picker/locale/en_US";
+import dayjs from "dayjs";
+
+
 
 
 import { cn } from "@/lib/utils"
@@ -54,7 +58,7 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
       location: post ? post.location : "",
       type: "event",
       file: [],
-      datetime: post ? post.datetime :new Date(),
+      datetime: post ? post.datetime : new Date(),
 
     },
   });
@@ -65,6 +69,17 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
   const { mutateAsync: updatePost, isLoading: isLoadingUpdate } =
     useUpdatePost();
 
+  const buddhistLocale: typeof en = {
+    ...en,
+    lang: {
+      ...en.lang,
+      fieldDateFormat: "YYYY-MM-DD",
+      fieldDateTimeFormat: "YYYY-MM-DD HH:mm:ss",
+      yearFormat: "YYYY",
+      cellYearFormat: "YYYY",
+    },
+  };
+
   // Handler
   const handleSubmit = async (value: z.infer<typeof PostValidation>) => {
 
@@ -72,11 +87,11 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
     // ACTION = UPDATE
     if (post && action === "Update") {
       const updatedPost = await updatePost({
-        ...value,
-        postId: post.$id,
         imageId: post.imageId,
         imageUrl: post.imageUrl,
         datetime: post.datetime,
+        ...value,
+        postId: post.$id,
       });
 
       if (!updatedPost) {
@@ -160,47 +175,27 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
           control={form.control}
           name="datetime"
           disabled={ViewEvent}
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>Date of Event</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      disabled={ViewEvent}
-                      // variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarMonthIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    // selected={field.value}
-                    onSelect={(selectedDate) => {
-                      field.onChange(selectedDate);
+          render={({ field }) => {
+            return (
+              <FormItem className="flex flex-col">
+                <ConfigProvider
+                  theme={{
+                    algorithm: theme.darkAlgorithm,
+                  }}>
+                  <DatePicker
+                    defaultValue={field.value ? dayjs(field.value) : null}
+                    showTime
+                    locale={buddhistLocale}
+                    onChange={(_, selectedDate) => {
+                      if (selectedDate && typeof selectedDate === "string")
+                        field.onChange(new Date(selectedDate));
                     }}
-                    disabled={(date) =>
-                      // date > new Date() || date < new Date("1900-01-01")
-                      date < new Date("1900-01-01")
-                    }
-                    initialFocus
                   />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
+                </ConfigProvider>
+                <FormMessage className="shad-form_message" />
+              </FormItem>
+            )
+          }}
         />
 
 

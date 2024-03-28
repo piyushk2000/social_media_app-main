@@ -135,13 +135,13 @@ const AllModules = () => {
                       <TableCell><Progress value={module.status} />{module.status} </TableCell>
                       <TableCell className="text-right align flex mt-10">
                         <Link to={`/update-module/${module.$id}`}>
-                          <EditIcon />
+                          <EditIcon className="m-1" />
                         </Link>
                         <Link to={`/view-module/${module.$id}`}>
-                          <VisibilityIcon />
+                          <VisibilityIcon className="m-1" />
                         </Link>
 
-                        <DeleteIcon onClick={() => handleDeleteModule(module.$id)} />
+                        <DeleteIcon className="m-1" onClick={() => handleDeleteModule(module.$id)} />
 
                       </TableCell>
                     </TableRow>
