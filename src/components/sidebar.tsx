@@ -1,12 +1,3 @@
-import { MoreHorizontal, Square } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  TooltipProvider,
-} from "@/components/ui/tooltip";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Message } from "./chat/chat-layout";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +16,7 @@ interface SidebarProps {
   isMobile: boolean;
 }
 
-export function Sidebar({
+export default function Sidebar({
   links,
   isCollapsed = false,
   isMobile,

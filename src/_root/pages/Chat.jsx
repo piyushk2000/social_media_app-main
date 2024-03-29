@@ -1,4 +1,4 @@
-import { Sidebar } from "@/components/Sidebar";
+import Sidebar  from "@/components/sidebar";
 import { useGetUserChats } from "@/lib/react-query/queries";
 import { useUserContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
