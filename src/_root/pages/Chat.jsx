@@ -1,8 +1,8 @@
-import { Sidebar } from "../../components/Sidebar";
+import { Sidebar } from "@/components/Sidebar";
 import { useGetUserChats } from "@/lib/react-query/queries";
 import { useUserContext } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
-import { Loader } from "../../components/shared";
+import { Loader } from "@/components/shared";
 
 const Chat = () => {
   const { user } = useUserContext();
