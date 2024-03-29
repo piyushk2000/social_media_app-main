@@ -29,8 +29,12 @@ import { ConfigProvider, DatePicker, Space, Typography, theme } from "antd";
 import dayjs from "dayjs";
 import en from "antd/es/date-picker/locale/en_US";
 import enUS from "antd/es/locale/en_US";
-
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { cn } from "@/lib/utils";
+import "@/components/forms/calender.css";
 
 import {
   Popover,
@@ -38,6 +42,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { toast } from "@/components/ui/use-toast";
+import moment from "moment";
 
 const FormSchema = z.object({
   dob: z.date({
@@ -55,6 +60,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user } = useUserContext();
+  const [datePickerOpen, setDatePickerOpen] = React.useState(false);
   const form = useForm<z.infer<typeof EventValidation>>({
     resolver: zodResolver(EventValidation),
     defaultValues: {
@@ -134,6 +140,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
       title: `${action} Event Created`,
     });
   };
+  const { RangePicker } = DatePicker;
 
   return (
     <Form {...form}>
@@ -177,27 +184,44 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
           control={form.control}
           name="eventtime"
           disabled={ViewEvent}
-          render={({ field }) =>
-         { 
-          return (
-            <FormItem className="flex flex-col">
-              <ConfigProvider
-                theme={{
-                  algorithm: theme.darkAlgorithm,
-                }}>
-                <DatePicker
-                  defaultValue={field.value? dayjs(field.value):null}
-                  showTime
-                  locale={buddhistLocale}
-                  onChange={(_,selectedDate) => {
-                    if(selectedDate && typeof selectedDate === "string")
-                    field.onChange(new Date(selectedDate));
-                  }}
-                />
-              </ConfigProvider>
-              <FormMessage className="shad-form_message" />
-            </FormItem>
-          )}}
+          render={({ field }) => {
+            console.log(
+              "field.value",
+              moment(field.value).format("YYYY-MM-DD HH:mm")
+            );
+            return (
+              <FormItem className="flex flex-col">
+                <ConfigProvider
+                  theme={{
+                    algorithm: theme.darkAlgorithm,
+                  }}>
+                  {/* <DatePicker
+                    showTime={{ format: "HH:mm" }} // Specify the time format
+                    format="YYYY-MM-DD HH:mm" // Specify the combined date and time format
+                    placeholder="Select Time"
+                    onChange={(_, selectedDate) => {
+                      if (selectedDate && typeof selectedDate === "string")
+                        field.onChange(new Date(selectedDate));
+                    }}
+                    // defaultValue={field.value ? dayjs(field.value) : null}
+                  /> */}
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={["DateTimePicker"]}>
+                      <DateTimePicker
+                        className="text-[#FFF] "
+                        label="Please select the date and time"
+                        defaultValue={field.value ? dayjs(field.value) : null}
+                        onChange={(newValue,date) => {
+                          field.onChange( new Date(newValue.toString()));
+                        }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </ConfigProvider>
+                <FormMessage className="shad-form_message" />
+              </FormItem>
+            );
+          }}
         />
         {ViewEvent ? (
           <div className="flex gap-4 items-center justify-end">
