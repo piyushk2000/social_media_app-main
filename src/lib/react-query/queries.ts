@@ -38,6 +38,7 @@ import {
   sendMessage,
   getMessages,
   getNewChats,
+  getUserChats,
 } from "@/lib/appwrite/api";
 import { INewPost, INewUser, IUpdatePost, IUpdateUser, IUpdateEvent, IUpdateModule, Imessage } from "@/types";
 import { INewEvent, INewModule } from "@/types/index";
@@ -398,5 +399,12 @@ export const useGetUserNewChats = (userId:string) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_USER_NEW_CHATS,userId],
     queryFn: ()=> getNewChats(userId),
+  });
+}
+
+export const useGetUserChats = (userId:string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USER_CHATS,userId],
+    queryFn: ()=> getUserChats(userId),
   });
 }

@@ -15,12 +15,12 @@ const Home = () => {
     isLoading: isPostLoading,
     isError: isErrorPosts,
   } = useGetRecentPosts();
-  const {
-    data: creators,
-    isLoading: isUserLoading,
-    isError: isErrorCreators,
-  } = useGetUsers(10);
-
+  // const {
+  //   data: creators,
+  //   isLoading: isUserLoading,
+  //   isError: isErrorCreators,
+  // } = useGetUsers(10);
+  const [creaters , setCreaters] = useState([])
   const [events, setEvents] = useState([]);
 
   // Assuming postData is the state variable containing the data
@@ -29,10 +29,21 @@ const Home = () => {
   useEffect(() => {
     const filteredEvents = posts?.documents.filter(post => post.type != 'event');
     setEvents(filteredEvents);
-    console.log(events)
+    const allCreaters = posts?.documents.map(post => post.creator);
+    const unique = allCreaters?.reduce((acc, current) => {
+      const x = acc.find(item => item.$id === current.$id);
+      if (!x) {
+        return acc.concat([current]);
+      } else {
+        return acc;
+      }
+    }
+    , []);
+
+    setCreaters(unique);
   }, [posts]);
 
-  if (isErrorPosts || isErrorCreators) {
+  if (isErrorPosts) {
     return (
       <div className="flex flex-1">
         <div className="home-container">
@@ -76,11 +87,11 @@ const Home = () => {
 
       <div className="home-creators">
         <h3 className="h3-bold text-light-1">Top Creators</h3>
-        {isUserLoading && !creators ? (
+        {creaters?.length < 0 ? (
           <Loader />
         ) : (
           <ul className="grid 2xl:grid-cols-2 gap-6">
-            {creators?.documents.map((creator) => (
+            {creaters?.map((creator) => (
               <li key={creator?.$id}>
                 <UserCard user={creator} />
               </li>

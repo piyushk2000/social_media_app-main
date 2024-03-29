@@ -31,4 +31,5 @@ export enum QUERY_KEYS {
   // GET CHATS  
   GET_CHATS = "getChats",
   GET_USER_NEW_CHATS = "getUserNewChats",
+  GET_USER_CHATS = "getUserChats",
 }

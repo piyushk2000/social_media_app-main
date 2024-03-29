@@ -957,3 +957,40 @@ export async function getNewChats(userId: string) {
     console.log(error);
   }
 }
+
+export async function getUserChats(userId: string) {
+  try {
+    const allChats = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.chatsCollectionId,
+      []
+    );
+
+    const currentUserChats = allChats.documents.filter((chat) => {
+      return (
+        chat.participants.includes(userId) &&
+        chat.messages.length > 0 
+      );
+    });
+
+    const anoutherUser =await Promise.all(currentUserChats.map(async(chat) => {
+      const anotherUserId =  chat.participants.filter((participant) => participant !== userId);
+      const userDetails = await databases.getDocument(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
+        anotherUserId[0]
+      );
+      const newChatCount = chat.messages.filter((message) => message.receiver === userId && !message.read).length;
+      return {
+        ...chat,
+        userDetails: userDetails,
+        newChatCount: newChatCount,
+      };
+    }));
+
+
+    return anoutherUser;
+  } catch (error) {
+    console.log(error);
+  }
+}
