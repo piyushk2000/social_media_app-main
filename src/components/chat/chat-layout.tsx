@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Chat } from "./chat";
 import { IUser } from "@/types";
+import { Chat } from "@/components/chat/chat";
 
 export interface Message {
   id: number;
