@@ -27,6 +27,12 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { ConfigProvider, DatePicker, Space, Typography, theme } from "antd";
 import en from "antd/es/date-picker/locale/en_US";
 import dayjs from "dayjs";
+import moment from "moment";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+
 
 
 
@@ -176,25 +182,42 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
           name="datetime"
           disabled={ViewEvent}
           render={({ field }) => {
+            console.log(
+              "field.value",
+              moment(field.value).format("YYYY-MM-DD HH:mm")
+            );
             return (
               <FormItem className="flex flex-col">
                 <ConfigProvider
                   theme={{
                     algorithm: theme.darkAlgorithm,
                   }}>
-                  <DatePicker
-                    defaultValue={field.value ? dayjs(field.value) : null}
-                    showTime
-                    locale={buddhistLocale}
+                  {/* <DatePicker
+                    showTime={{ format: "HH:mm" }} // Specify the time format
+                    format="YYYY-MM-DD HH:mm" // Specify the combined date and time format
+                    placeholder="Select Time"
                     onChange={(_, selectedDate) => {
                       if (selectedDate && typeof selectedDate === "string")
                         field.onChange(new Date(selectedDate));
                     }}
-                  />
+                    // defaultValue={field.value ? dayjs(field.value) : null}
+                  /> */}
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={["DateTimePicker"]}>
+                      <DateTimePicker
+                        className="text-[#FFF] "
+                        label="Please select the date and time"
+                        defaultValue={field.value ? dayjs(field.value) : null}
+                        onChange={(newValue, date) => {
+                          field.onChange(new Date(newValue.toString()));
+                        }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
                 </ConfigProvider>
                 <FormMessage className="shad-form_message" />
               </FormItem>
-            )
+            );
           }}
         />
 
