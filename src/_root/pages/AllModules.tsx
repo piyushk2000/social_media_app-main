@@ -52,13 +52,15 @@ const AllModules = () => {
 
   const { mutate: deleteModule } = useDeleteModule();
 
-  // console.log(modules)
   const handleDeleteModule = (id) => {
-    deleteModule({ moduleId: id });
-    moduleRefetch()
-    navigate("/all-modules")
-    // navigate(-1);
-    console.log(id)
+    deleteModule({ moduleId: id }, {
+      onSuccess: () => {
+        // Filter out the deleted module
+        const updatedModules = userModules.filter(module => module.$id !== id);
+        setUserModules(updatedModules);
+        navigate("/all-modules");
+      }
+    });
   };
 
 
