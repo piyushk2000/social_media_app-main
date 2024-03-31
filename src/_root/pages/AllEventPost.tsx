@@ -56,7 +56,7 @@ const EventPost = () => {
         }
       });
       // Sort the past events in descending order
-      past.sort((b, a) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+      past.sort((a, b) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
       // Sort the upcoming events in descending order
       upcoming.sort((b, a) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
       setPastEvents(past);
