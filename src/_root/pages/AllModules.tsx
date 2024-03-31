@@ -98,7 +98,7 @@ const AllModules = () => {
                 <TableCaption>Modules</TableCaption>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="min-w-1 max-w-1">Module Name</TableHead>
+                    <TableHead className="min-w-1 max-w-2">Module Name</TableHead>
                     <TableHead className="text-center">Study Level</TableHead>
                     <TableHead>Study Method</TableHead>
                     <TableHead>Progress</TableHead>
