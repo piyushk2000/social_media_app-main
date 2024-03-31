@@ -36,12 +36,12 @@ const EventPost = () => {
   useEffect(() => {
     const filteredEvents = posts?.documents.filter(post => post.type == 'event');
     setEvents(filteredEvents);
-    console.log('events',events)
+    console.log('events', events)
   }, [posts]);
 
   const [pastEvents, setPastEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-  
+
   useEffect(() => {
     if (!isPostLoading && events) {
       const currentDate = new Date();
@@ -55,10 +55,15 @@ const EventPost = () => {
           upcoming.push(event);
         }
       });
+      // Sort the past events in descending order
+      past.sort((b, a) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
+      // Sort the upcoming events in descending order
+      upcoming.sort((b, a) => new Date(b.datetime).getTime() - new Date(a.datetime).getTime());
       setPastEvents(past);
       setUpcomingEvents(upcoming);
     }
   }, [isPostLoading, events]);
+
 
 
   // console.log(posts)
@@ -84,18 +89,18 @@ const EventPost = () => {
     <div className="flex flex-1">
       <div className="home-container">
         <div >
-          
+
 
           {isPostLoading && !events ? (
             <Loader />
           ) : (
             <>
-            <div className="flex justify-between items-center w-full mb-5">
-            <h2 className="h3-bold md:h2-bold">Events</h2>
-            <Button className="shad-button_primary whitespace-nowrap" onClick={handelclick}>
-              Create Event
-            </Button>
-          </div>
+              <div className="flex justify-between items-center w-full mb-5">
+                <h2 className="h3-bold md:h2-bold">Events</h2>
+                <Button className="shad-button_primary whitespace-nowrap" onClick={handelclick}>
+                  Create Event
+                </Button>
+              </div>
               <Tabs defaultValue="upcoming" className="w-full">
                 <TabsList className="mt-2 grid w-full grid-cols-2">
                   <TabsTrigger value="upcoming">Upcoming Events</TabsTrigger>
@@ -133,7 +138,7 @@ const EventPost = () => {
 
 
 
-              
+
             </>
           )}
         </div>
