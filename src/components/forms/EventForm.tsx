@@ -181,7 +181,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
         />
 
 
-        <label className="shad-form_label -mb-9">Class Date and time</label>
+        <label className="shad-form_label -mb-9">Class Date and Time</label>
         <FormField
           control={form.control}
           name="eventtime"

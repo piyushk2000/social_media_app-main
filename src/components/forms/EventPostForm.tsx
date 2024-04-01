@@ -176,7 +176,7 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
             </FormItem>
           )}
         />
-        <label className="shad-form_label -mb-9">Event Date and time</label>
+        <label className="shad-form_label -mb-9">Event Date and Time</label>
         <FormField
           control={form.control}
           name="datetime"
