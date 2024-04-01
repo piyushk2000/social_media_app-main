@@ -34,7 +34,7 @@ const SigninForm = () => {
 
     if (!session) {
       toast({ title: "Login failed. Please try again." });
-      
+
       return;
     }
 
@@ -46,7 +46,7 @@ const SigninForm = () => {
       navigate("/");
     } else {
       toast({ title: "Login failed. Please try again.", });
-      
+
       return;
     }
   };
@@ -113,12 +113,18 @@ const SigninForm = () => {
           </p>
           <br></br><br></br><br></br>
           <div className="flex justify-between">
-            <a href="https://myaccount.lsbu.ac.uk/s/login" target="_blank" rel="noopener noreferrer" className="text-primary-500 text-small-semibold ml-1">
-                Login - LSBU MyAccount
-            </a>
-            <a href="https://www.lsbu.ac.uk" target="_blank" rel="noopener noreferrer" className="text-primary-500 text-small-semibold ml-1">
-            Login - My LSBU
-            </a>
+            <Button type="button" onClick={() => window.open('https://myaccount.lsbu.ac.uk/s/login', '_blank')}>
+              Login - LSBU MyAccount
+            </Button>
+            {/* <a href="https://myaccount.lsbu.ac.uk/s/login" target="_blank" rel="noopener noreferrer" className="text-primary-500 text-small-semibold ml-1">
+              Login - LSBU MyAccount
+            </a> */}
+            {/* <a href="https://www.lsbu.ac.uk" target="_blank" rel="noopener noreferrer" className="text-primary-500 text-small-semibold ml-1">
+              Login - My LSBU
+            </a> */}
+            <Button type="button" onClick={() => window.open('https://www.lsbu.ac.uk', '_blank')}>
+              Login - My LSBU
+            </Button>
           </div>
         </form>
       </div>
