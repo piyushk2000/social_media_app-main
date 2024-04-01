@@ -27,7 +27,7 @@ const EditEvent = () => {
             alt="edit"
             className="invert-white"
           />
-          <h2 className="h3-bold md:h2-bold text-left w-full">Edit class</h2>
+          <h2 className="h3-bold md:h2-bold text-left w-full">Edit Session</h2>
         </div>
 
         {isLoading ? <Loader /> : <EventForm action="Update" event={post} />}

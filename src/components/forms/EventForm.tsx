@@ -230,7 +230,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
                 className="shad-button_primary whitespace-nowrap"
                 disabled={isLoadingCreate || isLoadingUpdate}>
                 {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-                Edit Class
+                Edit Session
               </Button>
             </Link>
           </div>
@@ -247,7 +247,7 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
               className="shad-button_primary whitespace-nowrap"
               disabled={isLoadingCreate || isLoadingUpdate}>
               {(isLoadingCreate || isLoadingUpdate) && <Loader />}
-              {action} Class
+              {action} Session
             </Button>
           </div>
         )}

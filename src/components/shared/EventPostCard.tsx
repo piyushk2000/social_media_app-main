@@ -67,7 +67,7 @@ const EventPostCard = ({ post }: PostCardProps) => {
       <div className="post_details-info md:min-w-[35rem]">
         <div className="flex flex-col flex-1 w-full small-medium lg:base-regular">
           {/* <Label className="mt-5 text-primary-500 text-lg">Event Name</Label> */}
-          <p className="text-5xl font-extrabold">{post?.caption}</p>
+          <p className="text-2xl font-extrabold">{post?.caption}</p>
           <p className="text-slate-500 ">{post?.location}</p>
           <div className="rounded-xl gap-4 items-center  flex w-fit my-4">
             <Calendar size={35} />

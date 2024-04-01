@@ -25,12 +25,12 @@ export default function ClassesCalender() {
                 className="color-[#FFF]"
               />
               <h2 className="h3-bold md:h2-bold text-left w-full">
-                Classes Calender
+              Session Calender
               </h2>
             </div>
             {data?.userType === "teacher" &&
             <Button onClick={handelclick} className="shad-button_primary whitespace-nowrap">
-              Create class
+              Create Session
             </Button>}
           </div>
 

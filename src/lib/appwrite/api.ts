@@ -384,6 +384,8 @@ export async function createEvent(event: INewEvent) {
         description: event.description,
         eventtime: event.eventtime,
         eventsType: event.eventsType,
+        buildingName: event.buildingName,
+        roomNumber: event.roomNumber,
       }
     );
 
@@ -451,6 +453,8 @@ export async function updateEvent(event: IUpdateEvent) {
         description: event.description,
         eventtime: event.eventtime,
         eventsType: event.eventsType,
+        buildingName: event.buildingName,
+        roomNumber: event.roomNumber,
       }
     );
 

@@ -111,6 +111,15 @@ const SigninForm = () => {
               Sign up
             </Link>
           </p>
+          <br></br><br></br><br></br>
+          <div className="flex justify-between">
+            <a href="https://myaccount.lsbu.ac.uk/s/login" target="_blank" rel="noopener noreferrer" className="text-primary-500 text-small-semibold ml-1">
+                Login - LSBU MyAccount
+            </a>
+            <a href="https://www.lsbu.ac.uk" target="_blank" rel="noopener noreferrer" className="text-primary-500 text-small-semibold ml-1">
+            Login - My LSBU
+            </a>
+          </div>
         </form>
       </div>
     </Form>

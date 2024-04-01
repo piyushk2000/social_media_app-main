@@ -47,7 +47,7 @@ export const sidebarLinks = [
   {
     imgURL: "/assets/icons/calender.svg",
     route:"/classes",
-    label:"Classes Calender"
+    label:"Session Calender"
   },
   {
     imgURL: "/assets/icons/chat.svg",

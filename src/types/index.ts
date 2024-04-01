@@ -29,6 +29,8 @@ export type INewEvent = {
   description?: string;
   eventtime?: any;
   eventsType: string;
+  buildingName: string;
+  roomNumber: string;
 };
 
 export type IUpdateEvent = {
@@ -37,6 +39,8 @@ export type IUpdateEvent = {
   description: string;
   eventtime: any;
   eventsType: any;
+  buildingName: string;
+  roomNumber: string;
 };
 
 export type INewModule = {
