@@ -176,7 +176,7 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
             </FormItem>
           )}
         />
-
+        <label className="shad-form_label -mb-9">Event Date and time</label>
         <FormField
           control={form.control}
           name="datetime"
@@ -206,7 +206,7 @@ const EventPostForm = ({ post, action, ViewEvent = false }: PostFormProps) => {
                     <DemoContainer components={["DateTimePicker"]}>
                       <DateTimePicker
                         className="text-[#FFF] "
-                        label="Please select the date and time"
+                        // label="Please select the date and time"
                         defaultValue={field.value ? dayjs(field.value) : null}
                         onChange={(newValue, date) => {
                           field.onChange(new Date(newValue.toString()));

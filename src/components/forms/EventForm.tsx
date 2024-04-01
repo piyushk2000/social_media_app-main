@@ -180,6 +180,8 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
           )}
         />
 
+
+        <label className="shad-form_label -mb-9">Class Date and time</label>
         <FormField
           control={form.control}
           name="eventtime"
@@ -209,10 +211,10 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
                     <DemoContainer components={["DateTimePicker"]}>
                       <DateTimePicker
                         className="text-[#FFF] "
-                        label="Please select the date and time"
+                        // label="Please select the date and time"
                         defaultValue={field.value ? dayjs(field.value) : null}
-                        onChange={(newValue,date) => {
-                          field.onChange( new Date(newValue.toString()));
+                        onChange={(newValue, date) => {
+                          field.onChange(new Date(newValue.toString()));
                         }}
                       />
                     </DemoContainer>
