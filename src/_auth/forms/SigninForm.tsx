@@ -113,7 +113,7 @@ const SigninForm = () => {
           </p>
           <br></br><br></br><br></br>
           <div className="flex justify-between">
-            <Button type="button" onClick={() => window.open('https://myaccount.lsbu.ac.uk/s/login', '_blank')}>
+            <Button type="button" className="bg-[#B62E5F]" onClick={() => window.open('https://myaccount.lsbu.ac.uk/s/login', '_blank')}>
               Login - LSBU MyAccount
             </Button>
             {/* <a href="https://myaccount.lsbu.ac.uk/s/login" target="_blank" rel="noopener noreferrer" className="text-primary-500 text-small-semibold ml-1">
@@ -122,7 +122,7 @@ const SigninForm = () => {
             {/* <a href="https://www.lsbu.ac.uk" target="_blank" rel="noopener noreferrer" className="text-primary-500 text-small-semibold ml-1">
               Login - My LSBU
             </a> */}
-            <Button type="button" onClick={() => window.open('https://www.lsbu.ac.uk', '_blank')}>
+            <Button type="button" className="bg-[#B62E5F]" onClick={() => window.open('https://www.lsbu.ac.uk', '_blank')}>
               Login - My LSBU
             </Button>
           </div>
