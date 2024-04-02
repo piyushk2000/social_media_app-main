@@ -78,11 +78,9 @@ const Profile = () => {
   // console.log(currentUser)
 
   useEffect(() => {
-    console.log(currentUser)
     if (currentUser && currentUser.hasOwnProperty('bio')) {
       try {
         const bioObject = JSON.parse(currentUser.bio);
-        console.log('qualifications', bioObject?.qualifications)
         setSelectedQualifications(bioObject?.qualifications)
         setSelected(bioObject?.subject)
         setBio(bioObject?.bio)
@@ -91,7 +89,6 @@ const Profile = () => {
         console.log('json invalid')
       }
     }
-    console.log("otherfield", otherField)
   }, [currentUser])
 
 
@@ -99,7 +96,6 @@ const Profile = () => {
 
 
   useEffect(() => {
-    console.log(currentUser)
     if (currentUser && currentUser.hasOwnProperty('bio')) {
       try {
         const bioObject = JSON.parse(currentUser.bio);
@@ -109,7 +105,6 @@ const Profile = () => {
         console.log('json invalid')
       }
     }
-    console.log("otherfield", otherField)
   }, [currentUser])
 
 
@@ -174,7 +169,7 @@ const Profile = () => {
                           className="mr-1 mb-1 mt-1"
 
                         >
-                          {item}
+                          {Object.values(subjects).find((subject) => subject.value === item)?.label || item}
                           <button
                             className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                           </button>
@@ -196,7 +191,7 @@ const Profile = () => {
                           className="mr-1 mb-1 mt-1"
 
                         >
-                          {item}
+                          {Object.values(qualifications).find((qualification) => qualification.value === item)?.label || item}
                           <button
                             className="ml-1 ring-offset-background rounded-full outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
                           </button>
