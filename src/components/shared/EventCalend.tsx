@@ -31,6 +31,8 @@ export interface EventType {
   color?: string;
   description?: string;
   id?: string;
+  buildingName?: string;
+  roomNumber?: string;
 }
 const localizer = momentLocalizer(moment);
 
@@ -69,12 +71,14 @@ export default function EventCalender() {
           color: "default",
           description: event.description,
           id: event.$id,
+          buildingName: event.buildingName,
+          roomNumber: event.roomNumber,
         };
       });
       setEventData(eventsData);
     }
   }, [events]);
-
+  
   return (
     <div>
       <Calendar
@@ -111,6 +115,14 @@ export default function EventCalender() {
                 <p className="col-span-3 text-[#FFF]">
                   {moment(selectedEvent?.start).format("DD MMMM YYYY hh:mm A")}
                 </p>
+              </div>
+              <div className="grid grid-cols-5 items-center gap-4">
+                <p className="col-span-2 text-[#FFF]">Building name</p>
+                <p className="col-span-3 text-[#FFF]">{selectedEvent?.buildingName}</p>
+              </div>
+              <div className="grid grid-cols-5 items-center gap-4">
+                <p className="col-span-2 text-[#FFF]">Room Number</p>
+                <p className="col-span-3 text-[#FFF]">{selectedEvent?.roomNumber}</p>
               </div>
               <div className="grid grid-cols-5 items-center gap-4">
                 <p className="col-span-2 text-[#FFF]">Session Description</p>

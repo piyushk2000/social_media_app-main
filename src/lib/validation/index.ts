@@ -64,6 +64,8 @@ export const EventValidation = z.object({
   description: z.string().min(5, { message: "Minimum 5 characters." }).max(2200, { message: "Maximum 2,200 caracters" }),
   eventsType: z.string(),
   eventtime: z.date(),
+  buildingName: z.string().min(1, { message: "Minimum 1 characters." }).max(400, { message: "Maximum 400 caracters" }),
+  roomNumber: z.string().min(1, { message: "Minimum 1 characters." }).max(400, { message: "Maximum 400 caracters" }),
 });
 
 

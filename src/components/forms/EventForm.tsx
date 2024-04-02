@@ -68,6 +68,8 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
       description: event ? event.description : "",
       eventtime: event ? new Date(event.eventtime) : null,
       eventsType: event ? event.eventsType : "event",
+      buildingName: event ? event.buildingName : "",
+      roomNumber: event ? event.roomNumber : "",
     },
   });
 
@@ -187,10 +189,6 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
           name="eventtime"
           disabled={ViewEvent}
           render={({ field }) => {
-            console.log(
-              "field.value",
-              moment(field.value).format("YYYY-MM-DD HH:mm")
-            );
             return (
               <FormItem className="flex flex-col">
                 <ConfigProvider
@@ -225,6 +223,35 @@ const EventForm = ({ event, action, ViewEvent = false }: EventFormProps) => {
             );
           }}
         />
+        <FormField
+          control={form.control}
+          name="buildingName"
+          disabled={ViewEvent}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Building Name</FormLabel>
+              <FormControl>
+                <Input type="text" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+         <FormField
+          control={form.control}
+          name="roomNumber"
+          disabled={ViewEvent}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Room number</FormLabel>
+              <FormControl>
+                <Input type="number" className="shad-input" {...field} />
+              </FormControl>
+              <FormMessage className="shad-form_message" />
+            </FormItem>
+          )}
+        />
+         
         {ViewEvent ? (
           <div className="flex gap-4 items-center justify-end">
             <Link to={`/update-event/${event.$id}`}>
